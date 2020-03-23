@@ -16,6 +16,6 @@
     ],
     "plugins": [
         "import",
-        "react-hooks",
+        "react-hooks"
     ]
 }
