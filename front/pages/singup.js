@@ -1,20 +1,32 @@
-import React,{useState} from 'react';
-import AppLayout from '../components/AppLayout';
-import Head from 'next/head';
+import React,{useState, useCallback} from 'react';
 import {Form, Input, Checkbox, Button} from 'antd';
 
+
+//커스텀
+export const useInput = (initValue = null ) => {
+
+ 
+ const [value, setter] = useState(initValue);
+  
+ const handler = useCallback((e) => {
+     setter(e.target.value);
+ }, []);
+
+ return [value,handler];
+}
 const Signup = () => {
 
-    // const [id, setId] = useState('');
-    const [nick, setNick] = useState('');
-    const [password, setPassword] = useState('');
+    const [id, onChangeId] = useInput();
+    const [nick, onChangeNick] = useInput();
+    const [password, onChangePassword] = useInput();
+
     const [passwordCheck, setPasswordCheck] = useState('');
     const [term, setTerm] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [termError, setTermError] = useState(false);
     
 
-    const onSubmit = (e)=> {
+    const onSubmit = useCallback((e)=> {
 
         if(password !== passwordCheck)
         {
@@ -32,51 +44,32 @@ const Signup = () => {
             passwordCheck,
             term
         });
-    };
+    },[password,passwordCheck,term]);
 
     // const onChangeId = (e) => {
     //     setId(e.target.value);
     // };
 
-    const onChangeNick = (e) => {
-        setNick(e.target.value);
-    };  
+        // const onChangeNick = useCallback((e) => {
+        //     setNick(e.target.value);
+        // },[nick]);  
 
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
+        // const onChangePassword = useCallback((e) => {
+        //     setPassword(e.target.value);
+        // },[password]);
 
-    const onChangePasswordCheck = (e) => {
+    const onChangePasswordCheck = useCallback((e) => {
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
-    };
+    },[passwordError,termError]);
 
-    const onChangeTerm = (e) => {
+    const onChangeTerm = useCallback((e) => {
         setTermError(false);
         setTerm(e.target.checked);
-    };
+    },[term]);
 
-    //커스텀 
-    const useInput = (initValue = null ) => {
-
-        
-        const [value, setter] = useState(initValue);
-         
-        const handler = (e) => {
-            setter(e.target.value);
-        };
-
-        return [value,handler];
-    }
-
-    const [id, onChangeId] = useInput();
     return (
         <>
-        <Head>
-            <title>NodeBird</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.4/antd.css" />
-        </Head>
-        <AppLayout>
             <Form onFinish={onSubmit} style={{ padding: 10 }}>
                 <div>
                     <label htmlFor="user-id">아이디</label>
@@ -112,7 +105,6 @@ const Signup = () => {
                     <Button type="primary" htmlType="submit">가입하기</Button>
                 </div>
             </Form>
-        </AppLayout>
         </>
     )
 };

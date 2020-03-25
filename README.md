@@ -120,3 +120,38 @@ const useInput = (initValue = null ) => {
 ```
 
 - 기존 Hooks를 조합해 추가된 기능의 Hooks를 만들 수 있다.
+
+# UseCallback
+
+```
+     const handler = useCallback((e) => {
+     setter(e.target.value);
+ }, []);
+ 
+```
+
+# 중복되는 소스 줄이기
+- NEXT.js는 pages안에 _app.js로 설정한 파일내용을 최상위 부모 컴포넌트로 인식한다
+
+```
+const NodeBird = ({Component}) => {
+
+    return (
+        <>
+            <Head>
+                <title>NodeBird</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.4/antd.css" />
+            </Head>
+            <AppLayout>
+                <Component />
+            </AppLayout>
+        </>
+    )
+};
+
+```
+- 중복되는 코드를 정의하고 컴포넌트를 props로 받아와 사용
+- _document.js - html, head, body
+- _app.js  - root
+- page - 실제 컴포넌트
+- error.js - 에러

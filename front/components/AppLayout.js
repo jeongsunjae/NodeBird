@@ -1,8 +1,16 @@
 import React from 'react';
-import {Menu,Input, Button} from 'antd';
+import {Menu,Input, Button, Row, Col, Card, Avatar} from 'antd';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import LoginForm from './LoginForm';
 
-
+const dummy = {
+    nickname: '정선재',
+    Post : [],
+    Followings: [],
+    Followers: [],
+    isLoggedIn: false,
+}
 const AppLayout = ({children}) =>{ 
     return (
         <div>
@@ -26,10 +34,39 @@ const AppLayout = ({children}) =>{
                     <Input.Search enterButton style={{verticalAlign: 'middle'}}/>
                 </Menu.Item>
             </Menu>
-            <Link href="/singup"><a><Button>회원가입</Button></a></Link>
-            {children}
+        
+            <Row>
+                <Col xs={24} md={6}>
+                   { dummy.isLoggedIn ?
+                    <Card
+                        actions={[
+                            <div key="twit">쨱짹<br/>{dummy.Post.length}</div>,
+                            <div key="following">팔로잉<br/>{dummy.Followings.length}</div>,
+                            <div key="follower">팔로워<br/>{dummy.Followers.length}</div>,                    
+                        ]}
+                    >
+                        <Card.Meta
+                            avatar={<Avatar>{dummy.nickname[0]}</Avatar>}
+                            title={dummy.nickname}
+                        />
+                    </Card>
+                    :
+                    <LoginForm />
+                }
+                </Col>
+                <Col xs={24} md={12}>
+                 {children}
+                </Col>
+                <Col xs={24} md={6}>
+
+                </Col>
+            </Row>
         </div>
     )
+}
+
+AppLayout.propTypes={
+    children: PropTypes.node,
 }
 
 export default AppLayout;
