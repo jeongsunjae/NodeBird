@@ -210,6 +210,7 @@ const AppLayout = ({
       columnNumber: 21
     }
   }))), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    gutter: 10,
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
@@ -363,6 +364,9 @@ const LoginForm = () => {
   }, [id, password]);
   return __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
     onFinish: onSubmitForm,
+    style: {
+      padding: '10px'
+    },
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
@@ -430,6 +434,9 @@ const LoginForm = () => {
       columnNumber: 25
     }
   })), __jsx("div", {
+    style: {
+      marginTop: '10px'
+    },
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
@@ -2471,7 +2478,7 @@ const Signup = () => {
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Checkbox"], {
     name: "user-term",
-    value: term,
+    checked: term,
     onChange: onChangeTerm,
     __self: undefined,
     __source: {

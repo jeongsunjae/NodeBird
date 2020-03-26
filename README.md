@@ -155,3 +155,5 @@ const NodeBird = ({Component}) => {
 - _app.js  - root
 - page - 실제 컴포넌트
 - error.js - 에러
+
+- 컴포넌트 분리는 반복문, 조건문 등으로 나뉘는 부분을 분리해주면 쉽다.
