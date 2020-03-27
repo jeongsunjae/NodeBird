@@ -157,3 +157,23 @@ const NodeBird = ({Component}) => {
 - error.js - 에러
 
 - 컴포넌트 분리는 반복문, 조건문 등으로 나뉘는 부분을 분리해주면 쉽다.
+
+# Redux 전체적인 state 관리 통제 Store사용
+- Action -> state를 변경하는 행동
+- Dispatch -> action을 실행
+- Reducer -> action의 결과로 state를 어떻게 바꿀지 정의
+
+```
+import {combineReducers} from 'redux';
+import user from './user';
+import post from './post';
+
+const rootReducer =combineReducers({
+    user,
+    post
+});
+
+export default rootReducer;
+```
+
+- reducer를 하나로 합칠 수 있음
