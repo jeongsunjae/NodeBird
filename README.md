@@ -177,3 +177,8 @@ export default rootReducer;
 ```
 
 - reducer를 하나로 합칠 수 있음
+
+# redux에서 dispatch 및 state 가져오기
+
+ - const dispatch = useDispatch(); -> dispatch를 가져옴
+ -  const {isLoggedIn,user} = useSelector(state=>state.user); // selecort를 사용해서 state를 가져옴

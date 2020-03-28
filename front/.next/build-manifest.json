@@ -27,6 +27,18 @@
     "/index": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
+    ],
+    "/next/dist/pages/_error": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/profile": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/singup": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }
