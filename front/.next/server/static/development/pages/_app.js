@@ -250,32 +250,7 @@ const AppLayout = ({
       lineNumber: 26,
       columnNumber: 9
     }
-  }, children), __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Col"], {
-    xs: 24,
-    md: 6,
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 29,
-      columnNumber: 9
-    }
-  }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    href: "https://www.zerocho.com",
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 30,
-      columnNumber: 11
-    }
-  }, __jsx("a", {
-    target: "_blank",
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 30,
-      columnNumber: 49
-    }
-  }, "Made by ZeroCho")))));
+  }, children)));
 };
 
 AppLayout.propTypes = {
@@ -422,7 +397,7 @@ const LoginForm = () => {
       columnNumber: 9
     }
   }, "\uB85C\uADF8\uC778"), __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
-    href: "/signup",
+    href: "/singup",
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
@@ -2396,8 +2371,6 @@ const Signup = () => {
   const [password, onChangePassword] = useInput('');
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
   const onSubmit = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
-    e.preventDefault();
-
     if (password !== passwordCheck) {
       return setPasswordError(true);
     }
@@ -2421,7 +2394,7 @@ const Signup = () => {
     setTerm(e.target.checked);
   }, []);
   return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-    onSubmit: onSubmit,
+    onFinish: onSubmit,
     style: {
       padding: 10
     },
@@ -2592,7 +2565,7 @@ const Signup = () => {
       lineNumber: 75,
       columnNumber: 11
     }
-  }, "\uC81C\uB85C\uCD08 \uB9D0\uC744 \uC798 \uB4E4\uC744 \uAC83\uC744 \uB3D9\uC758\uD569\uB2C8\uB2E4."), termError && __jsx("div", {
+  }, "\uC57D\uAD00\uC5D0 \uB3D9\uC758\uD569\uB2C8\uB2E4."), termError && __jsx("div", {
     style: {
       color: 'red'
     },

@@ -149,8 +149,6 @@ const Signup = () => {
   const [password, onChangePassword] = useInput('');
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
   const onSubmit = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
-    e.preventDefault();
-
     if (password !== passwordCheck) {
       return setPasswordError(true);
     }
@@ -174,7 +172,7 @@ const Signup = () => {
     setTerm(e.target.checked);
   }, []);
   return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-    onSubmit: onSubmit,
+    onFinish: onSubmit,
     style: {
       padding: 10
     },
@@ -345,7 +343,7 @@ const Signup = () => {
       lineNumber: 75,
       columnNumber: 11
     }
-  }, "\uC81C\uB85C\uCD08 \uB9D0\uC744 \uC798 \uB4E4\uC744 \uAC83\uC744 \uB3D9\uC758\uD569\uB2C8\uB2E4."), termError && __jsx("div", {
+  }, "\uC57D\uAD00\uC5D0 \uB3D9\uC758\uD569\uB2C8\uB2E4."), termError && __jsx("div", {
     style: {
       color: 'red'
     },

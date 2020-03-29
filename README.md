@@ -182,3 +182,13 @@ export default rootReducer;
 
  - const dispatch = useDispatch(); -> dispatch를 가져옴
  -  const {isLoggedIn,user} = useSelector(state=>state.user); // selecort를 사용해서 state를 가져옴
+
+ # redux state와 react state를 같이 쓰는 이유
+
+ - redex state만 사용하면 너무 많은 action을 만들어야되며 많은 action이 실행됨
+
+ - 예를들어 폼 입력 시 입력은 react state로 받고 마지막에 redux state에 담아서 서버로 보냄
+ 
+ - 여러 컴포넌트에서 사용되는 데이터 -> redux state
+
+ - 단일 컴포넌트에서 사용되는 데이터 -> react state -> 서버로 보낼때 redux state

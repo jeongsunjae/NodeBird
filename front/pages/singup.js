@@ -23,7 +23,7 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const onSubmit = useCallback((e) => {
-    e.preventDefault();
+
     if (password !== passwordCheck) {
       return setPasswordError(true);
     }
@@ -49,7 +49,7 @@ const Signup = () => {
 
   return (
     <>
-      <Form onSubmit={onSubmit} style={{ padding: 10 }}>
+      <Form onFinish={onSubmit} style={{ padding: 10 }}>
         <div>
           <label htmlFor="user-id">아이디</label>
           <br />
@@ -72,7 +72,7 @@ const Signup = () => {
           {passwordError && <div style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</div>}
         </div>
         <div>
-          <Checkbox name="user-term" value={term} onChange={onChangeTerm}>제로초 말을 잘 들을 것을 동의합니다.</Checkbox>
+          <Checkbox name="user-term" value={term} onChange={onChangeTerm}>약관에 동의합니다.</Checkbox>
           {termError && <div style={{ color: 'red' }}>약관에 동의하셔야 합니다.</div>}
         </div>
         <div style={{ marginTop: 10 }}>
