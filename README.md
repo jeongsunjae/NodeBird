@@ -192,3 +192,36 @@ export default rootReducer;
  - 여러 컴포넌트에서 사용되는 데이터 -> redux state
 
  - 단일 컴포넌트에서 사용되는 데이터 -> react state -> 서버로 보낼때 redux state
+
+ # redux 미들웨어가 필요한 이유
+
+ - redux는 동기적인 방식밖에 지원하지 않음, 타이머도 X
+
+ - redux에서 비동기 활용하기 위해 미들웨어 사용
+
+ - saga에서는 function* 과 같은 제너레이터 사용
+
+ - yield 키워드는 제너레이터 함수의 실행을 중지시키거나 그리고  yield 키워드 뒤에오는 표현식[expression]의 값은 제너레이터의 caller로 반환된다. 제너레이터 버전의 return 키워드로 생각 할 수 있다
+
+ ```
+    export default function* rootSaga() {
+    yield all([
+        call(user),
+        call(post),
+    ]);
+}
+
+ ```
+
+ - put은 dispatch와 동일
+
+ # Middleware 설정 
+
+ ```
+
+    const sagaMiddleware = createSagaMiddleware();
+    const middlewares = [sagaMiddleware];
+
+    sagaMiddleware.run(rootSaga);
+
+```

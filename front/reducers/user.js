@@ -19,6 +19,7 @@ const dummyUser = {
   export const LOG_IN_FAILURE = 'LOG_IN_FAILURE'; // 액션의 이름
   export const LOG_OUT = 'LOG_OUT';
   
+  
   export const signUpAction = (data) => {
     return {
       type: SIGN_UP,
