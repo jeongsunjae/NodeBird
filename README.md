@@ -225,3 +225,20 @@ export default rootReducer;
     sagaMiddleware.run(rootSaga);
 
 ```
+
+# 제너레이터
+
+- 함수 실행을 중간에 멈출 수 있는 함수 (멈췄다 사용자가 원할 때 재개)
+
+- yield => 중단점 / yield* => iterable(반복 가능 값)
+
+- take : 해당 액션이 dispatch되면 제너레이터를 next하는 이펙트
+
+```
+    yield take(함수);
+
+```
+
+- while(true) 와 yield를 통한 반복문 제어 혹은 yield []를 통해 가능
+
+- put => saga의 dispatch

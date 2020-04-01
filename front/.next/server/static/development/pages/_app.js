@@ -2875,7 +2875,7 @@ function* login() {
 }
 
 function* watchLogin() {
-  yield takeLatest(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN"], login);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN"], login);
 }
 
 function* userSaga() {
