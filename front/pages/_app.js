@@ -26,12 +26,11 @@ const NodeBird = ({Component, store}) => {
 };
 
 NodeBird.propTypes = {
-    Component: PropTypes.elementType,
-    store: PropTypes.object,
+    Component: PropTypes.elementType.isRequired,
+    store: PropTypes.object.isRequired,
 }
 
-//redux를 사용하기 위해 store를 사용해야하는데 그 store를 만들어주는 부분
-export default withRedex((initialState, options)=>{
+const configureStore = (initialState, options)=>{
     const sagaMiddleware = createSagaMiddleware();
     const middlewares = [sagaMiddleware];
     const enhancer = process.env.NODE_ENV === 'production'
@@ -43,4 +42,7 @@ export default withRedex((initialState, options)=>{
     const store = createStore(reducer,initialState,enhancer);
     sagaMiddleware.run(rootSaga);
     return store;
-})(NodeBird);
+}
+
+//redux를 사용하기 위해 store를 사용해야하는데 그 store를 만들어주는 부분
+export default withRedex(configureStore)(NodeBird);

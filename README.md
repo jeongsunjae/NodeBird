@@ -242,3 +242,9 @@ export default rootReducer;
 - while(true) 와 yield를 통한 반복문 제어 혹은 yield []를 통해 가능
 
 - put => saga의 dispatch
+
+# call와 fork
+
+- 둘다 함수 실행
+
+- call => 동기호출 fork => 비동기 호출
