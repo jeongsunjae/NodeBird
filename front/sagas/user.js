@@ -39,7 +39,9 @@ function signAPI() {
 
 function* signUp(){
     try {
-        yield call(signAPI);
+        // yield call(signAPI);
+        yield delay(2000);
+        throw new Error('에러');
         yield put({
             type:SIGN_UP_SUCCESS
         })
@@ -48,7 +50,8 @@ function* signUp(){
     {
         console.error(e);
         yield put({
-            type:SIGN_UP_FAILURE
+            type:SIGN_UP_FAILURE,
+            error: e
         })
     }
 }
