@@ -248,3 +248,19 @@ export default rootReducer;
 - 둘다 함수 실행
 
 - call => 동기호출 fork => 비동기 호출
+
+# Commnet 작성
+
+```
+    const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
+      const post = state.mainPosts[postIndex];
+      const Comments = [...post.Comments, dummyComment];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = { ...post, Comments };
+
+```
+
+- postIndex를 찾기 위해 현재 받은 data의 id와 post의 id 비교 index를 찾음
+- 해당 index를 가진 post를 가져와 그 post안에 Commnets 배열에 불변성 유지하여 추가
+- mainPosts도 불변성 유지 
+- 현재는 backend가 없어서 더미로 대체

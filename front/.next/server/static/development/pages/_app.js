@@ -292,7 +292,7 @@ const LoginForm = () => {
   const [id, onChangeId] = Object(_pages_singup__WEBPACK_IMPORTED_MODULE_4__["useInput"])('');
   const [password, onChangePassword] = Object(_pages_singup__WEBPACK_IMPORTED_MODULE_4__["useInput"])('');
   const {
-    isLogginIn
+    isLoggingIn
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.user);
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
   const onSubmitForm = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
@@ -395,7 +395,7 @@ const LoginForm = () => {
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     type: "primary",
     htmlType: "submit",
-    loading: isLogginIn,
+    loading: isLoggingIn,
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
@@ -2711,20 +2711,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 const initialState = {
   mainPosts: [{
+    id: 1,
     User: {
       id: 1,
       nickname: '정선재'
     },
     content: '첫 번째 게시글',
-    img: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726'
+    img: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
+    Comments: []
   }],
-  // 화면에 보일 포스트
+  // 화면에 보일 포스트들
   imagePaths: [],
   // 미리보기 이미지 경로
-  addPostErrorReason: false,
+  addPostErrorReason: '',
   // 포스트 업로드 실패 사유
   isAddingPost: false,
-  //포스트 업로드 중
+  // 포스트 업로드 중
   postAdded: false,
   // 포스트 업로드 성공
   isAddingComment: false,
@@ -2798,7 +2800,7 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
       {
         return _objectSpread({}, state, {
           isAddingPost: false,
-          mainPosts: [dummyPost, ...state.mainPosts],
+          mainPosts: [action.data, ...state.mainPosts],
           postAdded: true
         });
       }
@@ -3132,8 +3134,32 @@ function* watchAddPost() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["ADD_POST_REQUEST"], addPost);
 }
 
+function addCommentAPI() {}
+
+function* addComment(action) {
+  try {
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["ADD_COMMENT_SUCCESS"],
+      data: {
+        postId: action.data.postId
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["ADD_COMMENT_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchAddComment() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["ADD_COMMENT_REQUEST"], addComment);
+}
+
 function* postSaga() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddPost)]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddPost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddComment)]);
 }
 
 /***/ }),

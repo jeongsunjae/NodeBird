@@ -8,7 +8,7 @@ import { LOG_IN_REQUEST  } from '../reducers/user'; // TODO: util 폴더로 옮�
 const LoginForm = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const {isLogginIn} = useSelector(state => state.user);
+  const {isLoggingIn} = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const onSubmitForm = useCallback((e) => {
@@ -34,7 +34,7 @@ const LoginForm = () => {
         <Input name="user-password" value={password} onChange={onChangePassword} type="password" required />
       </div>
       <div style={{ marginTop: '10px' }}>
-        <Button type="primary" htmlType="submit" loading={isLogginIn}>로그인</Button>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
         <Link href="/singup"><a><Button>회원가입</Button></a></Link>
       </div>
     </Form>
