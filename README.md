@@ -264,3 +264,18 @@ export default rootReducer;
 - 해당 index를 가진 post를 가져와 그 post안에 Commnets 배열에 불변성 유지하여 추가
 - mainPosts도 불변성 유지 
 - 현재는 backend가 없어서 더미로 대체
+
+
+# Back-End
+
+- sequelize 관계형 DB 표현
+
+- hasmany , belongsTo (1 : N) 관계 
+- belongsToMany (N : M) 관계 ( 중간에 테이블 생성 - 서로의 관계 정리 ) -> through : "테이블 명" 
+
+```
+      db.Post.hasMany(db.Image);
+      db.Post.belongsTo(db.Post, { as: 'Retweet' });
+      db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
+
+```
