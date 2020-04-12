@@ -279,3 +279,26 @@ export default rootReducer;
       db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
 
 ```
+
+- through 중간 테이블 명
+
+- as 별칭
+
+- 정의한 model 가져와서 사용
+
+```
+db.sequelize.sync();
+```
+
+# db 생성 및 연결
+- sequelize db:create
+- npm i mysql2
+
+# express에서 router 사용
+
+```
+const router = express.Router();
+```
+
+- router에서 정의한 내용은 index에서 불러서 사용app.use('/api/user', userAPIRouter); -> router.get('/') => api/user/ 
+
