@@ -10,7 +10,41 @@ router.get('/', (req, res) => { // /api/user/
 });
 
 router.post('/', async (req, res, next) => { // POST /api/user 회원가입
-  
+
+  try {
+
+    const exUser = await db.User.findOne({
+        where: {
+
+            userId: req.body.userId,
+        },
+    });
+
+    if(exUser) {
+        //send는 문자열
+        return res.status(403).send('이미 가입한 아이디입니다.');
+    }
+
+    //암호화된 비밀번호
+    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+
+    const newUser = await db.User.create({
+        nickname: req.body.nickname,
+        userId: req.body.userId,
+        password: hashedPassword,
+    });
+
+    console.log(newUser);
+
+    //json데이터
+    return res.status(200).json(newUser);
+
+  }catch(e){
+      
+      console.error(e);
+
+      return next(e);
+  }
 });
 
 router.get('/:id', (req, res) => { // 남의 정보 가져오는 것 ex) /api/user/123

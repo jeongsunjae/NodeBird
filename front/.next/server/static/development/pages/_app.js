@@ -2590,7 +2590,7 @@ const Signup = () => {
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Checkbox"], {
     name: "user-term",
-    value: term,
+    checked: term,
     onChange: onChangeTerm,
     __self: undefined,
     __source: {
@@ -3206,16 +3206,17 @@ function* watchLogin() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_REQUEST"], login);
 }
 
-function signAPI() {// 서버에 요청
+function signUpAPI(signUpData) {
+  // 서버에 요청
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:3065/api/user/', signUpData);
 }
 
-function* signUp() {
+function* signUp(action) {
   try {
     // yield call(signAPI);
-    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000);
-    throw new Error('에러');
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(signUpAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: SIGN_UP_SUCCESS
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_SUCCESS"]
     });
   } catch (e) {
     console.error(e);

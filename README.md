@@ -302,3 +302,26 @@ const router = express.Router();
 
 - router에서 정의한 내용은 index에서 불러서 사용app.use('/api/user', userAPIRouter); -> router.get('/') => api/user/ 
 
+
+# bcrypt 모듈
+
+- 암호화 모듈 (비밀번호 해쉬)
+
+```
+bcrypt.hash(req.body.password, 12);
+```
+
+- 보통 10~12 정도 많이 씀 뒤에 숫자가 커질수록 해킹하기 어렵지만 비밀번호가 만들어지는데도 오래걸림
+
+# express restAPI 구성할때 기본
+
+```
+//로그
+app.use(morgan('dev'));
+//json 데이터 처리
+app.use(express.json());
+//form으로 넘어오는 데이터 처리
+app.use(express.urlencoded({extended: true}));
+// 다른 주소에서 요청 주고받고 할 수 있게
+app.use(cors());
+```
