@@ -458,6 +458,7 @@ const UserProfile = () => {
   const {
     me
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(state => state.user);
+  console.log(me);
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
   const onLogout = Object(react__WEBPACK_IMPORTED_MODULE_1__["useCallback"])(() => {
     dispatch({
@@ -470,29 +471,29 @@ const UserProfile = () => {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19,
+        lineNumber: 20,
         columnNumber: 9
       }
     }, "\uC9F9\uC9F9", __jsx("br", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19,
+        lineNumber: 20,
         columnNumber: 27
       }
-    }), me.Post.length), __jsx("div", {
+    }), me.Posts.length), __jsx("div", {
       key: "following",
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 20,
+        lineNumber: 21,
         columnNumber: 9
       }
     }, "\uD314\uB85C\uC789", __jsx("br", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 20,
+        lineNumber: 21,
         columnNumber: 33
       }
     }), me.Followings.length), __jsx("div", {
@@ -500,21 +501,21 @@ const UserProfile = () => {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21,
+        lineNumber: 22,
         columnNumber: 9
       }
     }, "\uD314\uB85C\uC6CC", __jsx("br", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21,
+        lineNumber: 22,
         columnNumber: 32
       }
     }), me.Followers.length)],
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17,
+      lineNumber: 18,
       columnNumber: 5
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_0__["Card"].Meta, {
@@ -522,7 +523,7 @@ const UserProfile = () => {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 25,
+        lineNumber: 26,
         columnNumber: 17
       }
     }, me.nickname[0]),
@@ -530,7 +531,7 @@ const UserProfile = () => {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24,
+      lineNumber: 25,
       columnNumber: 7
     }
   }), __jsx(antd__WEBPACK_IMPORTED_MODULE_0__["Button"], {
@@ -538,7 +539,7 @@ const UserProfile = () => {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28,
+      lineNumber: 29,
       columnNumber: 7
     }
   }, "\uB85C\uADF8\uC544\uC6C3"));
@@ -2988,7 +2989,7 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
         return _objectSpread({}, state, {
           isLoggingIn: false,
           isLoggedIn: true,
-          me: dummyUser,
+          me: action.data,
           isLoading: false
         });
       }
@@ -3182,17 +3183,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://localhost:3065/api';
 
-function loginAPI() {
+function loginAPI(loginData) {
   // 서버에 요청
-  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/login');
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/user/login', loginData, {
+    withCredentials: true
+  });
 }
 
-function* login() {
+function* login(action) {
   try {
-    //yield call(loginAPI);
-    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000), yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"]
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loginAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"],
+      data: result.data
     });
   } catch (e) {
     console.error(e);
@@ -3208,7 +3213,7 @@ function* watchLogin() {
 
 function signUpAPI(signUpData) {
   // 서버에 요청
-  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:3065/api/user/', signUpData);
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/user/', signUpData);
 }
 
 function* signUp(action) {

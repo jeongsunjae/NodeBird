@@ -325,3 +325,50 @@ app.use(express.urlencoded({extended: true}));
 // 다른 주소에서 요청 주고받고 할 수 있게
 app.use(cors());
 ```
+
+# cookie 사용
+
+```
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(expressSession({
+
+    //매번 세션 강제 저장
+    resave:false,
+    // 빈 값도 저장
+    saveUninitialized: false,
+    // 시크릿 키
+    secret: process.env.COOKIE_SECRET,
+    // 쿠키 옵션
+    cookie: {
+        // 자바스크립트에서 쿠키 접근 불가
+        httpOnly: true,
+        secure: false, // https를 쓸 대 true
+    },
+    name: 'rnbck',
+}));
+
+```
+
+- back
+```
+  요청주소랑 갖게
+    origin: true,
+    credentials: true,
+```
+
+- front 
+```
+  return axios.post('/user/login', loginData, {
+        withCredentials: true,
+    });
+```
+
+- front와 back 서로 쿠키 전달 하려면 다음과 같이 Credentials 옵션 있어야함
+
+
+
+# passport 로그인
+
+- serializeUser : id와 쿠키 저장해서 보냄
+
+- deserializeUser : 쿠키를 토대로 해당 정보 검색
