@@ -114,8 +114,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./LoginForm */ "./components/LoginForm.js");
 /* harmony import */ var _UserProfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UserProfile */ "./components/UserProfile.js");
+/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
 var _jsxFileName = "C:\\Users\\admin\\Desktop\\NodeBird\\front\\components\\AppLayout.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -128,13 +130,21 @@ const AppLayout = ({
   children
 }) => {
   const {
-    isLoggedIn
+    me
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(state => state.user);
+  const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    if (!me) {
+      dispatch({
+        type: _reducers_user__WEBPACK_IMPORTED_MODULE_7__["LOAD_USER_REQUEST"]
+      });
+    }
+  }, []);
   return __jsx("div", {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 12,
+      lineNumber: 24,
       columnNumber: 5
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Menu"], {
@@ -142,7 +152,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 13,
+      lineNumber: 25,
       columnNumber: 7
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Menu"].Item, {
@@ -150,7 +160,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14,
+      lineNumber: 26,
       columnNumber: 9
     }
   }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -158,14 +168,14 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14,
+      lineNumber: 26,
       columnNumber: 31
     }
   }, __jsx("a", {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14,
+      lineNumber: 26,
       columnNumber: 46
     }
   }, "\uB178\uB4DC\uBC84\uB4DC"))), __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Menu"].Item, {
@@ -173,7 +183,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15,
+      lineNumber: 27,
       columnNumber: 9
     }
   }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -181,14 +191,14 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15,
+      lineNumber: 27,
       columnNumber: 34
     }
   }, __jsx("a", {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15,
+      lineNumber: 27,
       columnNumber: 56
     }
   }, "\uD504\uB85C\uD544"))), __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Menu"].Item, {
@@ -196,7 +206,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16,
+      lineNumber: 28,
       columnNumber: 9
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Input"].Search, {
@@ -207,7 +217,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17,
+      lineNumber: 29,
       columnNumber: 11
     }
   }))), __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Row"], {
@@ -215,7 +225,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20,
+      lineNumber: 32,
       columnNumber: 7
     }
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Col"], {
@@ -224,21 +234,21 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 21,
+      lineNumber: 33,
       columnNumber: 9
     }
-  }, isLoggedIn ? __jsx(_UserProfile__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, me ? __jsx(_UserProfile__WEBPACK_IMPORTED_MODULE_6__["default"], {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23,
+      lineNumber: 35,
       columnNumber: 15
     }
   }) : __jsx(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24,
+      lineNumber: 36,
       columnNumber: 15
     }
   })), __jsx(antd__WEBPACK_IMPORTED_MODULE_3__["Col"], {
@@ -247,7 +257,7 @@ const AppLayout = ({
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26,
+      lineNumber: 38,
       columnNumber: 9
     }
   }, children)));
@@ -2924,8 +2934,6 @@ const dummyUser = {
   id: 1
 };
 const initialState = {
-  isLoggedIn: false,
-  // 로그인 여부
   isLoggingOut: false,
   // 로그아웃 시도중
   isLoggingIn: false,
@@ -2988,7 +2996,6 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
       {
         return _objectSpread({}, state, {
           isLoggingIn: false,
-          isLoggedIn: true,
           me: action.data,
           isLoading: false
         });
@@ -3006,6 +3013,7 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
     case LOG_OUT_REQUEST:
       {
         return _objectSpread({}, state, {
+          //로그아웃 로딩창
           isLoggingOut: true
         });
       }
@@ -3177,17 +3185,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return userSaga; });
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
 
 
 
-axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://localhost:3065/api';
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = 'http://localhost:3065/api';
 
 function loginAPI(loginData) {
   // 서버에 요청
-  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/user/login', loginData, {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/user/login', loginData, {
     withCredentials: true
   });
 }
@@ -3196,24 +3204,24 @@ function* login(action) {
   try {
     const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loginAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"],
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_SUCCESS"],
       data: result.data
     });
   } catch (e) {
     console.error(e);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_FAILURE"]
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_FAILURE"]
     });
   }
 }
 
 function* watchLogin() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_REQUEST"], login);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_REQUEST"], login);
 }
 
 function signUpAPI(signUpData) {
   // 서버에 요청
-  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/user/', signUpData);
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/user/', signUpData);
 }
 
 function* signUp(action) {
@@ -3221,23 +3229,82 @@ function* signUp(action) {
     // yield call(signAPI);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(signUpAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_SUCCESS"]
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_SUCCESS"]
     });
   } catch (e) {
     console.error(e);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_FAILURE"],
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_FAILURE"],
       error: e
     });
   }
 }
 
 function* watchSignup() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_REQUEST"], signUp);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_REQUEST"], signUp);
+}
+
+function logOutAPI() {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/user/logout', {}, {
+    withCredentials: true
+  });
+}
+
+function* logOut() {
+  try {
+    // yield call(logOutAPI);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(logOutAPI);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_OUT_SUCCESS"]
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_OUT_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchLogOut() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_OUT_REQUEST"], logOut);
+}
+
+function loadUserAPI() {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/user/', {
+    withCredentials: true
+  });
+}
+
+function* loadUser() {
+  try {
+    // yield call(loadUserAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadUserAPI);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_USER_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_USER_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchLoadUser() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_USER_REQUEST"], loadUser);
 }
 
 function* userSaga() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogin), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchSignup)]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogin), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogOut), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadUser), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchSignup)]);
 }
 
 /***/ }),
