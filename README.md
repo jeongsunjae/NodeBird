@@ -372,3 +372,4 @@ app.use(expressSession({
 - serializeUser : id와 쿠키 저장해서 보냄
 
 - deserializeUser : 쿠키를 토대로 해당 정보 검색
+

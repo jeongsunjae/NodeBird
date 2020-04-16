@@ -15,8 +15,6 @@ import {
     SIGN_UP_SUCCESS,
   } from '../reducers/user';
 
-axios.defaults.baseURL = 'http://localhost:3065/api';
-
 
 function loginAPI(loginData) {
 // 서버에 요청
@@ -116,9 +114,9 @@ function logOutAPI() {
   
   function* loadUser() {
     try {
-      // yield call(loadUserAPI);
+    
       const result = yield call(loadUserAPI);
-      yield put({ // put은 dispatch 동일
+      yield put({ 
         type: LOAD_USER_SUCCESS,
         data: result.data,
       });
