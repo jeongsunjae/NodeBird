@@ -1,10 +1,4 @@
-const dummyUser = {
-    nickname: '정선재',
-    Post: [],
-    Followings: [],
-    Followers: [],
-    id:1,
-  };
+
   
   export const initialState = {
    

@@ -2744,24 +2744,6 @@ const initialState = {
   addCommentErrorReason: '',
   commentAdded: false
 };
-const dummyPost = {
-  id: 2,
-  User: {
-    id: 1,
-    nickname: '정선재'
-  },
-  content: '나는 더미입니다.',
-  Comments: []
-};
-const dummyComment = {
-  id: 1,
-  User: {
-    id: 1,
-    nickname: '정선재'
-  },
-  createdAt: new Date(),
-  content: '더미 댓글입니다.'
-};
 const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
@@ -2926,13 +2908,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const dummyUser = {
-  nickname: '정선재',
-  Post: [],
-  Followings: [],
-  Followers: [],
-  id: 1
-};
 const initialState = {
   isLoggingOut: false,
   // 로그아웃 시도중
