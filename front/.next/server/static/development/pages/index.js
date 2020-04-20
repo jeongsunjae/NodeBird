@@ -115,7 +115,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../reducers/post */ "./reducers/post.js");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__);
-var _jsxFileName = "C:\\Users\\admin\\Desktop\\NodeBird\\front\\components\\PostCard.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -166,184 +165,70 @@ const PostCard = ({
   const onChangeCommentText = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
     setCommentText(e.target.value);
   }, []);
-  return __jsx("div", {
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 43,
-      columnNumber: 5
-    }
-  }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+  return __jsx("div", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     key: +post.createdAt,
     cover: post.img && __jsx("img", {
       alt: "example",
-      src: post.img,
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 46,
-        columnNumber: 26
-      }
+      src: post.img
     }),
-    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 48,
-        columnNumber: 9
-      }
-    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 49,
-        columnNumber: 9
-      }
-    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["MailOutlined"], {
-      onClick: onToggleComment,
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 50,
-        columnNumber: 9
-      }
-    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["EllipsisOutlined"], {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 51,
-        columnNumber: 9
-      }
-    })],
-    extra: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 53,
-        columnNumber: 14
-      }
-    }, "\uD314\uB85C\uC6B0"),
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 44,
-      columnNumber: 5
-    }
+    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["MailOutlined"], {
+      onClick: onToggleComment
+    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["EllipsisOutlined"], null)],
+    extra: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], null, "\uD314\uB85C\uC6B0")
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
-    avatar: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 56,
-        columnNumber: 17
-      }
-    }, post.User.nickname[0]),
+    avatar: __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      href: {
+        pathname: '/user',
+        query: {
+          id: post.User.id
+        }
+      },
+      as: `/user/${post.User.id}`
+    }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, post.User.nickname[0]))),
     title: post.User.nickname,
-    description: __jsx("div", {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 59,
-        columnNumber: 11
-      }
-    }, post.content.split(/(#[^\s]+)/g).map(v => {
+    description: __jsx("div", null, post.content.split(/(#[^\s]+)/g).map(v => {
       if (v.match(/#[^\s]+/)) {
         return __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
-          href: "/hashtag",
-          __self: undefined,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 63,
-            columnNumber: 17
-          }
-        }, __jsx("a", {
-          __self: undefined,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 63,
-            columnNumber: 39
-          }
-        }, v));
+          href: {
+            pathname: '/hashtag',
+            query: {
+              tag: v.slice(1)
+            }
+          },
+          as: `/hashtag/${v.slice(1)}`,
+          key: v
+        }, __jsx("a", null, v));
       }
 
       return v;
-    })),
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 55,
-      columnNumber: 7
-    }
+    }))
   })), commentFormOpened && __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-    onFinish: onSubmitComment,
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 74,
-      columnNumber: 11
-    }
-  }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"].Item, {
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 75,
-      columnNumber: 13
-    }
-  }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"].TextArea, {
+    onFinish: onSubmitComment
+  }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"].Item, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"].TextArea, {
     rows: 4,
     value: commentText,
-    onChange: onChangeCommentText,
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 76,
-      columnNumber: 15
-    }
+    onChange: onChangeCommentText
   })), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     type: "primary",
     htmlType: "submit",
-    loading: isAddingComment,
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 78,
-      columnNumber: 13
-    }
+    loading: isAddingComment
   }, "\uBC84\uD2BC")), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["List"], {
     header: `${post.Comments ? post.Comments.length : 0} 댓글`,
     itemLayout: "horizontal",
     dataSource: post.Comments || [],
-    renderItem: item => __jsx("li", {
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 85,
-        columnNumber: 15
-      }
-    }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Comment"], {
+    renderItem: item => __jsx("li", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Comment"], {
       author: item.User.nickname,
-      avatar: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], {
-        __self: undefined,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 88,
-          columnNumber: 27
-        }
-      }, item.User.nickname[0]),
-      content: item.content,
-      __self: undefined,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 86,
-        columnNumber: 17
-      }
-    })),
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 80,
-      columnNumber: 11
-    }
+      avatar: __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        href: {
+          pathname: '/user',
+          query: {
+            id: item.User.id
+          }
+        },
+        as: `user/${item.User.id}`
+      }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, item.User.nickname[0]))),
+      content: item.content
+    }))
   })));
 };
 
@@ -2319,16 +2204,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const initialState = {
-  mainPosts: [{
-    id: 1,
-    User: {
-      id: 1,
-      nickname: '정선재'
-    },
-    content: '첫 번째 게시글',
-    img: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
-    Comments: []
-  }],
+  mainPosts: [],
   // 화면에 보일 포스트들
   imagePaths: [],
   // 미리보기 이미지 경로
@@ -2378,6 +2254,30 @@ const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 /* harmony default export */ __webpack_exports__["default"] = ((state = initialState, action) => {
   switch (action.type) {
+    case UPLOAD_IMAGES_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case UPLOAD_IMAGES_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          imagePaths: [...state.imagePaths, ...action.data]
+        });
+      }
+
+    case UPLOAD_IMAGES_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case REMOVE_IMAGE:
+      {
+        return _objectSpread({}, state, {
+          imagePaths: state.imagePaths.filter((v, i) => i !== action.index)
+        });
+      }
+
     case ADD_POST_REQUEST:
       {
         return _objectSpread({}, state, {
@@ -2392,7 +2292,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
         return _objectSpread({}, state, {
           isAddingPost: false,
           mainPosts: [action.data, ...state.mainPosts],
-          postAdded: true
+          postAdded: true,
+          imagePaths: []
         });
       }
 
@@ -2417,7 +2318,7 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
       {
         const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
         const post = state.mainPosts[postIndex];
-        const Comments = [...post.Comments, dummyComment];
+        const Comments = [...post.Comments, action.data.comment];
         const mainPosts = [...state.mainPosts];
         mainPosts[postIndex] = _objectSpread({}, post, {
           Comments
@@ -2437,7 +2338,23 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
         });
       }
 
+    case LOAD_COMMENTS_SUCCESS:
+      {
+        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
+        const post = state.mainPosts[postIndex];
+        const Comments = action.data.comments;
+        const mainPosts = [...state.mainPosts];
+        mainPosts[postIndex] = _objectSpread({}, post, {
+          Comments
+        });
+        return _objectSpread({}, state, {
+          mainPosts
+        });
+      }
+
     case LOAD_MAIN_POSTS_REQUEST:
+    case LOAD_HASHTAG_POSTS_REQUEST:
+    case LOAD_USER_POSTS_REQUEST:
       {
         return _objectSpread({}, state, {
           mainPosts: []
@@ -2445,6 +2362,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
       }
 
     case LOAD_MAIN_POSTS_SUCCESS:
+    case LOAD_HASHTAG_POSTS_SUCCESS:
+    case LOAD_USER_POSTS_SUCCESS:
       {
         return _objectSpread({}, state, {
           mainPosts: action.data
@@ -2452,6 +2371,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
       }
 
     case LOAD_MAIN_POSTS_FAILURE:
+    case LOAD_HASHTAG_POSTS_FAILURE:
+    case LOAD_USER_POSTS_FAILURE:
       {
         return _objectSpread({}, state);
       }

@@ -373,3 +373,17 @@ app.use(expressSession({
 
 - deserializeUser : 쿠키를 토대로 해당 정보 검색
 
+
+# Next 동적 주소 사용
+
+- NodeBird.getInitialProps를 통해 _app.js에서 query를 받아온다
+
+- 해당 컴포넌트에서 context.query.tag와 같은 형식으로 받아온다
+
+```
+Hashtag.getInitialProps = async (context) => {
+  console.log('hashtag getInitialProps', context.query.tag);
+  return { tag: context.query.tag };
+};
+
+```
