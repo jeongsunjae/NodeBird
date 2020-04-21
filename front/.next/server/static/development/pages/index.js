@@ -145,9 +145,16 @@ const PostCard = ({
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
   const onToggleComment = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
     setCommentFormOpened(prev => !prev);
+
+    if (!commentFormOpened) {
+      dispatch({
+        type: _reducers_post__WEBPACK_IMPORTED_MODULE_5__["LOAD_COMMENTS_REQUEST"],
+        data: post.id
+      });
+    }
   }, []);
   const onSubmitComment = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
-    // e.preventDefault();
+    //e.preventDefault();
     if (!me) {
       return alert('로그인이 필요합니다.');
     }
@@ -155,10 +162,11 @@ const PostCard = ({
     return dispatch({
       type: _reducers_post__WEBPACK_IMPORTED_MODULE_5__["ADD_COMMENT_REQUEST"],
       data: {
-        postId: post.id
+        postId: post.id,
+        content: commentText
       }
     });
-  }, [me && me.id]);
+  }, [me && me.id, commentText]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     setCommentText('');
   }, [commentAdded === true]);

@@ -3,7 +3,7 @@ import { Avatar, Button, Card, Comment, Form, Icon, Input, List } from 'antd';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_COMMENT_REQUEST } from '../reducers/post';
+import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
 import {TwitterOutlined,LikeOutlined,MailOutlined,EllipsisOutlined } from '@ant-design/icons';
 
 const PostCard = ({ post }) => {
@@ -16,10 +16,16 @@ const PostCard = ({ post }) => {
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened(prev => !prev);
+    if (!commentFormOpened) {
+      dispatch({
+        type: LOAD_COMMENTS_REQUEST,
+        data: post.id,
+      });
+    }
   }, []);
 
   const onSubmitComment = useCallback((e) => {
-    // e.preventDefault();
+    //e.preventDefault();
     if (!me) {
       return alert('로그인이 필요합니다.');
     }
@@ -27,9 +33,10 @@ const PostCard = ({ post }) => {
       type: ADD_COMMENT_REQUEST,
       data: {
         postId: post.id,
+        content: commentText,
       },
     });
-  }, [me && me.id]);
+  }, [me && me.id, commentText]);
 
   useEffect(() => {
     setCommentText('');

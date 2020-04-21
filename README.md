@@ -387,3 +387,9 @@ Hashtag.getInitialProps = async (context) => {
 };
 
 ```
+
+# 동적인 주소 Link
+
+```
+href={{pathname: '/hashtag', query:{tag: v.slice(1)}}}
+```
