@@ -1,9 +1,11 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path')
 const db = require('../models');
-
+const {isLoggedIn} = require('./middleware');
 const router = express.Router();
 
-router.post('/', async (req, res, next) => { // POST /api/post
+router.post('/', isLoggedIn, async (req, res, next) => { // POST /api/post
   try {
     const hashtags = req.body.content.match(/#[^\s]+/g);
     const newPost = await db.Post.create({
@@ -31,7 +33,29 @@ router.post('/', async (req, res, next) => { // POST /api/post
   }
 });
 
-router.post('/images', (req, res) => {
+const upload = multer({
+  // 서버쪽에 저장하겠다는 옵션
+  storage: multer.diskStorage({
+    destination(req,file,done){
+          //에러시 //저장할 폴더
+      done(null, 'uploads');
+
+    },
+    filename(req,file,done){
+
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + new Date().valueOf() + ext);
+
+    }
+  }),
+  limits: {fileSize: 20 * 1024 * 1024},
+});
+
+//한장 single  여러장 array formdata에서 여러 이름으로 이미지 올릴때 filed
+router.post('/images', upload.array('image'), (req, res) => {
+  
+  res.json(req.files.map(v => v.filename));
 
 });
 
@@ -58,7 +82,7 @@ router.get('/:id/comments', async (req, res, next) => {
   }
 });
 
-router.post('/:id/comment', async (req, res, next) => { // POST /api/post/1000000/comment
+router.post('/:id/comment', isLoggedIn, async (req, res, next) => { // POST /api/post/1000000/comment
   try {
     const post = await db.Post.findOne({ where: { id: req.params.id } });
     if (!post) {

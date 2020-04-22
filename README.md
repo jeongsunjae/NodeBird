@@ -393,3 +393,38 @@ Hashtag.getInitialProps = async (context) => {
 ```
 href={{pathname: '/hashtag', query:{tag: v.slice(1)}}}
 ```
+
+# 로그인 확인 함수
+
+- isAuthenticated
+
+# 이미지 올리는 방식
+
+- 이미지 업로드와 게시글 본문을 따로 전송 저장 (ajax 사용)
+
+- multer를 사용해서 이미지 업로드
+
+```
+
+const upload = multer({
+  // 서버쪽에 저장하겠다는 옵션
+  storage: multer.diskStorage({
+      
+    destination(req,file,done){
+          //에러시 //저장할 폴더
+      done(null, 'uploads');
+
+    },
+    filename(req,file,done){
+
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + new Date().valueOf() + ext);
+
+    }
+  }),
+  //file 용량 및 갯수 등 제한 가능
+  limits: {fileSize: 20 * 1024 * 1024},
+});
+
+```
