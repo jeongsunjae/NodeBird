@@ -25,6 +25,9 @@ passportConfig();
 
 //로그
 app.use(morgan('dev'));
+//static 미들웨어에 경로를 지정하면 그 안에 파일들을 다른 곳에서 사용할 수 있게함
+     //uploads경로를 /(루트) 경로처럼 사용
+app.use('/', express.static('uploads'));
 //json 데이터 처리
 app.use(express.json());
 //form으로 넘어오는 데이터 처리

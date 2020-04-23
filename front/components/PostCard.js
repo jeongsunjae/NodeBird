@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
 import {TwitterOutlined,LikeOutlined,MailOutlined,EllipsisOutlined } from '@ant-design/icons';
+import PostImages from './PostImages';
 
 const PostCard = ({ post }) => {
 
@@ -46,11 +47,12 @@ const PostCard = ({ post }) => {
     setCommentText(e.target.value);
   }, []);
   
+  console.log(post);
   return (
     <div>
     <Card
       key={+post.createdAt}
-      cover={post.img && <img alt="example" src={post.img} />}
+      cover={post.Images  && post.Images[0] && <PostImages images={post.Images} />}
       actions={[
         <TwitterOutlined />,
         <LikeOutlined />,

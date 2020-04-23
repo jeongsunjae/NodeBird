@@ -428,3 +428,12 @@ const upload = multer({
 });
 
 ```
+
+- static 미들웨어에 경로를 지정하면 그 안에 파일들을 다른 곳에서 사용할 수 있게함
+
+```
+//static 미들웨어에 경로를 지정하면 그 안에 파일들을 다른 곳에서 사용할 수 있게함
+     //uploads경로를 /(루트) 경로처럼 사용
+app.use('/', express.static('uploads'));
+
+```
