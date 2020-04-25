@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -265,6 +265,7 @@ const PostCard = ({
     isAddingComment
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(state => state.post);
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
+  const liked = me && post.Likers && post.Likers.find(v => v.id === me.id);
   const onToggleComment = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
     setCommentFormOpened(prev => !prev);
 
@@ -295,13 +296,33 @@ const PostCard = ({
   const onChangeCommentText = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
     setCommentText(e.target.value);
   }, []);
-  console.log(post);
+  const onToggleLike = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    if (!me) {
+      return alert('로그인 필요');
+    }
+
+    if (liked) {
+      dispatch({
+        type: _reducers_post__WEBPACK_IMPORTED_MODULE_5__["UNLIKE_POST_REQUEST"],
+        data: post.id
+      });
+    } else {
+      dispatch({
+        type: _reducers_post__WEBPACK_IMPORTED_MODULE_5__["LIKE_POST_REQUEST"],
+        data: post.id
+      });
+    }
+  }, [me && me.id, post && post.id, liked]);
   return __jsx("div", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     key: +post.createdAt,
     cover: post.Images && post.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
       images: post.Images
     }),
-    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["MailOutlined"], {
+    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], {
+      theme: liked ? "twoTone" : "outlined",
+      twoToneColor: "#eb2f96",
+      onClick: onToggleLike
+    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["MailOutlined"], {
       onClick: onToggleComment
     }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["EllipsisOutlined"], null)],
     extra: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], null, "\uD314\uB85C\uC6B0")
@@ -2554,6 +2575,56 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
         return _objectSpread({}, state);
       }
 
+    case LIKE_POST_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case LIKE_POST_SUCCESS:
+      {
+        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
+        const post = state.mainPosts[postIndex];
+        const Likers = [{
+          id: action.data.userId
+        }, ...post.Likers];
+        const mainPosts = [...state.mainPosts];
+        mainPosts[postIndex] = _objectSpread({}, post, {
+          Likers
+        });
+        return _objectSpread({}, state, {
+          mainPosts
+        });
+      }
+
+    case LIKE_POST_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case UNLIKE_POST_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case UNLIKE_POST_SUCCESS:
+      {
+        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
+        const post = state.mainPosts[postIndex];
+        const Likers = post.Likers.filter(v => v.id !== action.data.userId);
+        const mainPosts = [...state.mainPosts];
+        mainPosts[postIndex] = _objectSpread({}, post, {
+          Likers
+        });
+        return _objectSpread({}, state, {
+          mainPosts
+        });
+      }
+
+    case UNLIKE_POST_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
     default:
       {
         return _objectSpread({}, state);
@@ -2563,7 +2634,7 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

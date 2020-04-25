@@ -172,7 +172,13 @@ router.get('/:id/posts', async(req, res, next) => {
         through: 'Like',
         as: 'Likers',
         attributes: ['id'],
-      }],
+      },
+      {
+        model: db.User,
+        through: 'Like',
+        as: 'Likers',
+        attributes:['id'],
+    }],
     });
     res.json(posts);
   } catch (e) {
