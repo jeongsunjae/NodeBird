@@ -236,7 +236,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _PostImages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PostImages */ "./components/PostImages.js");
+/* harmony import */ var _PostCardContent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PostCardContent */ "./components/PostCardContent.js");
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -313,20 +315,51 @@ const PostCard = ({
       });
     }
   }, [me && me.id, post && post.id, liked]);
+  const onRetweet = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    if (!me) {
+      return alert('로그인이 필요합니다.');
+    }
+
+    return dispatch({
+      type: _reducers_post__WEBPACK_IMPORTED_MODULE_5__["RETWEET_REQUEST"],
+      data: post.id
+    });
+  }, [me, post && post.id]);
   return __jsx("div", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     key: +post.createdAt,
     cover: post.Images && post.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
       images: post.Images
     }),
-    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], null), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], {
+    actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], {
+      onClick: onRetweet
+    }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["LikeOutlined"], {
       theme: liked ? "twoTone" : "outlined",
       twoToneColor: "#eb2f96",
       onClick: onToggleLike
     }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["MailOutlined"], {
       onClick: onToggleComment
     }), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["EllipsisOutlined"], null)],
+    title: post.RetweetId ? `${post.User.nickname}님이 리트윗하셨습니다.` : null,
     extra: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], null, "\uD314\uB85C\uC6B0")
+  }, post.RetweetId && post.Retweet ? __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+    cover: post.Retweet.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      images: post.Retweet.Images
+    })
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
+    avatar: __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      href: {
+        pathname: '/user',
+        query: {
+          id: post.User.id
+        }
+      },
+      as: `/user/${post.User.id}`
+    }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, post.Retweet.User.nickname[0]))),
+    title: post.Retweet.User.nickname,
+    description: __jsx(_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      postData: post.Retweet.content
+    })
+  })) : __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
     avatar: __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
       href: {
         pathname: '/user',
@@ -337,22 +370,9 @@ const PostCard = ({
       as: `/user/${post.User.id}`
     }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, post.User.nickname[0]))),
     title: post.User.nickname,
-    description: __jsx("div", null, post.content.split(/(#[^\s]+)/g).map(v => {
-      if (v.match(/#[^\s]+/)) {
-        return __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
-          href: {
-            pathname: '/hashtag',
-            query: {
-              tag: v.slice(1)
-            }
-          },
-          as: `/hashtag/${v.slice(1)}`,
-          key: v
-        }, __jsx("a", null, v));
-      }
-
-      return v;
-    }))
+    description: __jsx(_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      postData: post.content
+    })
   })), commentFormOpened && __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
     onFinish: onSubmitComment
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"].Item, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"].TextArea, {
@@ -392,6 +412,54 @@ PostCard.propTypes = {
   })
 };
 /* harmony default export */ __webpack_exports__["default"] = (PostCard);
+
+/***/ }),
+
+/***/ "./components/PostCardContent.js":
+/*!***************************************!*\
+  !*** ./components/PostCardContent.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+const PostCardContent = ({
+  postData
+}) => {
+  return __jsx("div", null, postData.split(/(#[^\s]+)/g).map(v => {
+    if (v.match(/#[^\s]+/)) {
+      return __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        href: {
+          pathname: '/hashtag',
+          query: {
+            tag: v.slice(1)
+          }
+        },
+        as: `/hashtag/${v.slice(1)}`,
+        key: v
+      }, __jsx("a", null, v));
+    }
+
+    return v;
+  }));
+};
+
+PostCardContent.propTypes = {
+  postData: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired
+};
+/* harmony default export */ __webpack_exports__["default"] = (PostCardContent);
 
 /***/ }),
 
@@ -2621,6 +2689,23 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
       }
 
     case UNLIKE_POST_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case RETWEET_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case RETWEET_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          mainPosts: [action.data, ...state.mainPosts]
+        });
+      }
+
+    case RETWEET_FAILURE:
       {
         return _objectSpread({}, state);
       }
