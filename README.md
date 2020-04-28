@@ -437,3 +437,28 @@ const upload = multer({
 app.use('/', express.static('uploads'));
 
 ```
+
+- saga post 동작시 data가 없어도 {} 넣어주지 않으면 에러 발생
+
+- Redux는 Reducer안에서만 제어가 가능하기 때문에 다른 Reducers를 제어할 수 없어서 Saga에서 제어
+
+```
+function* addPost(action) {
+  try {
+    const result = yield call(addPostAPI, action.data);
+    yield put({
+      type: ADD_POST_SUCCESS,
+      data: result.data,
+    });
+    yield put({ // user 데이터를 수정
+      type: ADD_POST_TO_ME, < -- post작성시 user data를 수정함>
+      data: result.data.id,
+    });
+  } catch (e) {
+    yield put({
+      type: ADD_POST_FAILURE,
+      error: e,
+    });
+  }
+}
+```

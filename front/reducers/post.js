@@ -1,3 +1,4 @@
+
 export const initialState = {
   mainPosts: [], // 화면에 보일 포스트들
   imagePaths: [], // 미리보기 이미지 경로
@@ -231,6 +232,7 @@ export default (state = initialState, action) => {
         ...state,
       };
     }
+
     default: {
       return {
         ...state,
