@@ -44,7 +44,7 @@ function* addPost(action) {
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
-    yield put({ // user reducer의 데이터를 수정
+    yield put({ // user 데이터를 수정
       type: ADD_POST_TO_ME,
       data: result.data.id,
     });

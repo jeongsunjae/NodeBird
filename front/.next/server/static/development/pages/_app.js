@@ -2962,7 +2962,7 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 /*!**************************!*\
   !*** ./reducers/user.js ***!
   \**************************/
-/*! exports provided: initialState, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, LOAD_FOLLOW_REQUEST, LOAD_FOLLOW_SUCCESS, LOAD_FOLLOW_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE, ADD_POST_TO_ME, default */
+/*! exports provided: initialState, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWERS_SUCCESS, LOAD_FOLLOWERS_FAILURE, LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWINGS_SUCCESS, LOAD_FOLLOWINGS_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE, EDIT_NICKNAME_REQUEST, EDIT_NICKNAME_SUCCESS, EDIT_NICKNAME_FAILURE, ADD_POST_TO_ME, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2980,9 +2980,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_REQUEST", function() { return LOG_OUT_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_SUCCESS", function() { return LOG_OUT_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_FAILURE", function() { return LOG_OUT_FAILURE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_REQUEST", function() { return LOAD_FOLLOW_REQUEST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_SUCCESS", function() { return LOAD_FOLLOW_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_FAILURE", function() { return LOAD_FOLLOW_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWERS_REQUEST", function() { return LOAD_FOLLOWERS_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWERS_SUCCESS", function() { return LOAD_FOLLOWERS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWERS_FAILURE", function() { return LOAD_FOLLOWERS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWINGS_REQUEST", function() { return LOAD_FOLLOWINGS_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWINGS_SUCCESS", function() { return LOAD_FOLLOWINGS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOWINGS_FAILURE", function() { return LOAD_FOLLOWINGS_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_REQUEST", function() { return FOLLOW_USER_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_SUCCESS", function() { return FOLLOW_USER_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_FAILURE", function() { return FOLLOW_USER_FAILURE; });
@@ -2992,6 +2995,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_REQUEST", function() { return REMOVE_FOLLOWER_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_SUCCESS", function() { return REMOVE_FOLLOWER_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_FAILURE", function() { return REMOVE_FOLLOWER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EDIT_NICKNAME_REQUEST", function() { return EDIT_NICKNAME_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EDIT_NICKNAME_SUCCESS", function() { return EDIT_NICKNAME_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EDIT_NICKNAME_FAILURE", function() { return EDIT_NICKNAME_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_POST_TO_ME", function() { return ADD_POST_TO_ME; });
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -3005,19 +3011,24 @@ const initialState = {
   isLoggingIn: false,
   // 로그인 시도중
   logInErrorReason: '',
-  // 로그인 에러 사유
-  signedUp: false,
+  // 로그인 실패 사유
+  isSignedUp: false,
   // 회원가입 성공
   isSigningUp: false,
+  // 회원가입 시도중
   signUpErrorReason: '',
   // 회원가입 실패 사유
   me: null,
-  // 본인 정보
+  // 내 정보
   followingList: [],
-  // 팔로잉
+  // 팔로잉 리스트
   followerList: [],
-  // 팔로워
-  userInfo: null // 다른 사람 정보
+  // 팔로워 리스트
+  userInfo: null,
+  // 남의 정보
+  isEditingNickname: false,
+  // 이름 변경 중
+  editNicknameErrorReason: '' // 이름 변경 실패 사유
 
 };
 const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -3035,9 +3046,12 @@ const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
-const LOAD_FOLLOW_REQUEST = 'LOAD_FOLLOW_REQUEST';
-const LOAD_FOLLOW_SUCCESS = 'LOAD_FOLLOW_SUCCESS';
-const LOAD_FOLLOW_FAILURE = 'LOAD_FOLLOW_FAILURE';
+const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
+const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
+const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
+const LOAD_FOLLOWINGS_REQUEST = 'LOAD_FOLLOWINGS_REQUEST';
+const LOAD_FOLLOWINGS_SUCCESS = 'LOAD_FOLLOWINGS_SUCCESS';
+const LOAD_FOLLOWINGS_FAILURE = 'LOAD_FOLLOWINGS_FAILURE';
 const FOLLOW_USER_REQUEST = 'FOLLOW_USER_REQUEST';
 const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
 const FOLLOW_USER_FAILURE = 'FOLLOW_USER_FAILURE';
@@ -3047,6 +3061,9 @@ const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE';
 const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
 const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
 const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+const EDIT_NICKNAME_REQUEST = 'EDIT_NICKNAME_REQUEST';
+const EDIT_NICKNAME_SUCCESS = 'EDIT_NICKNAME_SUCCESS';
+const EDIT_NICKNAME_FAILURE = 'EDIT_NICKNAME_FAILURE';
 const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 /* harmony default export */ __webpack_exports__["default"] = ((state = initialState, action) => {
   switch (action.type) {
@@ -3079,7 +3096,6 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
     case LOG_OUT_REQUEST:
       {
         return _objectSpread({}, state, {
-          //로그아웃 로딩창
           isLoggingOut: true
         });
       }
@@ -3170,8 +3186,9 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
       {
         return _objectSpread({}, state, {
           me: _objectSpread({}, state.me, {
-            Followings: [...state.me.Followings].filter(v => v.id !== action.data)
-          })
+            Followings: state.me.Followings.filter(v => v.id !== action.data)
+          }),
+          followingList: state.followingList.filter(v => v.id !== action.data)
         });
       }
 
@@ -3188,6 +3205,86 @@ const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
               id: action.data
             }, ...state.me.Posts]
           })
+        });
+      }
+
+    case LOAD_FOLLOWERS_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case LOAD_FOLLOWERS_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          followerList: action.data
+        });
+      }
+
+    case LOAD_FOLLOWERS_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case LOAD_FOLLOWINGS_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case LOAD_FOLLOWINGS_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          followingList: action.data
+        });
+      }
+
+    case LOAD_FOLLOWINGS_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case REMOVE_FOLLOWER_REQUEST:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case REMOVE_FOLLOWER_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          me: _objectSpread({}, state.me, {
+            Followers: state.me.Followers.filter(v => v.id !== action.data)
+          }),
+          followerList: state.followerList.filter(v => v.id !== action.data)
+        });
+      }
+
+    case REMOVE_FOLLOWER_FAILURE:
+      {
+        return _objectSpread({}, state);
+      }
+
+    case EDIT_NICKNAME_REQUEST:
+      {
+        return _objectSpread({}, state, {
+          isEditingNickname: true,
+          editNicknameErrorReason: ''
+        });
+      }
+
+    case EDIT_NICKNAME_SUCCESS:
+      {
+        return _objectSpread({}, state, {
+          isEditingNickname: false,
+          me: _objectSpread({}, state.me, {
+            nickname: action.data
+          })
+        });
+      }
+
+    case EDIT_NICKNAME_FAILURE:
+      {
+        return _objectSpread({}, state, {
+          isEditingNickname: false,
+          editNicknameErrorReason: action.error
         });
       }
 
@@ -3262,7 +3359,7 @@ function* addPost(action) {
       data: result.data
     });
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      // user reducer의 데이터를 수정
+      // user 데이터를 수정
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_3__["ADD_POST_TO_ME"],
       data: result.data.id
     });
@@ -3538,21 +3635,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function loginAPI(loginData) {
-  // 서버에 요청
+function logInAPI(loginData) {
+  // 서버에 요청을 보내는 부분
   return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/user/login', loginData, {
     withCredentials: true
   });
 }
 
-function* login(action) {
+function* logIn(action) {
   try {
-    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loginAPI, action.data);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(logInAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_SUCCESS"],
       data: result.data
     });
   } catch (e) {
+    // loginAPI 실패
     console.error(e);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_FAILURE"]
@@ -3560,23 +3659,25 @@ function* login(action) {
   }
 }
 
-function* watchLogin() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_REQUEST"], login);
+function* watchLogIn() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOG_IN_REQUEST"], logIn);
 }
 
 function signUpAPI(signUpData) {
-  // 서버에 요청
+  // 서버에 요청을 보내는 부분
   return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/user/', signUpData);
 }
 
 function* signUp(action) {
   try {
-    // yield call(signAPI);
+    // yield call(signUpAPI);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(signUpAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_SUCCESS"]
     });
   } catch (e) {
+    // loginAPI 실패
     console.error(e);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_FAILURE"],
@@ -3585,7 +3686,7 @@ function* signUp(action) {
   }
 }
 
-function* watchSignup() {
+function* watchSignUp() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["SIGN_UP_REQUEST"], signUp);
 }
 
@@ -3627,8 +3728,10 @@ function loadUserAPI(userId) {
 
 function* loadUser(action) {
   try {
+    // yield call(loadUserAPI);
     const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadUserAPI, action.data);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_USER_SUCCESS"],
       data: result.data,
       me: !action.data
@@ -3707,8 +3810,130 @@ function* watchUnfollow() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["UNFOLLOW_USER_REQUEST"], unfollow);
 }
 
+function loadFollowersAPI(userId) {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId}/followers`, {
+    withCredentials: true
+  });
+}
+
+function* loadFollowers(action) {
+  try {
+    // yield call(loadFollowersAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadFollowersAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWERS_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWERS_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchLoadFollowers() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWERS_REQUEST"], loadFollowers);
+}
+
+function loadFollowingsAPI(userId) {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId}/followings`, {
+    withCredentials: true
+  });
+}
+
+function* loadFollowings(action) {
+  try {
+    // yield call(loadFollowersAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadFollowingsAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWINGS_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWINGS_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchLoadFollowings() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["LOAD_FOLLOWINGS_REQUEST"], loadFollowings);
+}
+
+function removeFollowerAPI(userId) {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/user/${userId}/follower`, {
+    withCredentials: true
+  });
+}
+
+function* removeFollower(action) {
+  try {
+    // yield call(loadFollowersAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(removeFollowerAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["REMOVE_FOLLOWER_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["REMOVE_FOLLOWER_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchRemoveFollower() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["REMOVE_FOLLOWER_REQUEST"], removeFollower);
+}
+
+function editNicknameAPI(nickname) {
+  // 서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch('/user/nickname', {
+    nickname
+  }, {
+    withCredentials: true
+  });
+}
+
+function* editNickname(action) {
+  try {
+    // yield call(loadFollowersAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(editNicknameAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      // put은 dispatch 동일
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["EDIT_NICKNAME_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    // loginAPI 실패
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_2__["EDIT_NICKNAME_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchEditNickname() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_2__["EDIT_NICKNAME_REQUEST"], editNickname);
+}
+
 function* userSaga() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogin), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogOut), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadUser), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchSignup), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchFollow), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUnfollow)]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogIn), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogOut), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadUser), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchSignUp), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchFollow), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUnfollow), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadFollowers), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadFollowings), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchRemoveFollower), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchEditNickname)]);
 }
 
 /***/ }),
