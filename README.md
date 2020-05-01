@@ -462,3 +462,15 @@ function* addPost(action) {
   }
 }
 ```
+
+# SSR dispatch
+
+- getInitialProps를 사용
+
+```
+Home.getInitialProps = async(context) => {
+  context.store.dispatch({
+    type: LOAD_MAIN_POSTS_REQUEST,
+  });
+};
+```

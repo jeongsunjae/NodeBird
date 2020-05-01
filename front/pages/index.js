@@ -10,12 +10,6 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_MAIN_POSTS_REQUEST,
-    });
-  }, []);
-
   return (
     <div>
       {me && <PostForm />}
@@ -26,6 +20,12 @@ const Home = () => {
       })}
     </div>
   );
+};
+
+Home.getInitialProps = async(context) => {
+  context.store.dispatch({
+    type: LOAD_MAIN_POSTS_REQUEST,
+  });
 };
 
 export default Home;
