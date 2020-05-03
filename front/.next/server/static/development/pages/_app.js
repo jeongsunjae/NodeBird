@@ -2237,7 +2237,10 @@ NodeBird.getInitialProps = async context => {
 
 const configureStore = (initialState, options) => {
   const sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_9___default()();
-  const middlewares = [sagaMiddleware];
+  const middlewares = [sagaMiddleware, store => next => action => {
+    console.log(action);
+    next(action);
+  }];
   const enhancer = false ? undefined : Object(redux__WEBPACK_IMPORTED_MODULE_8__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_8__["applyMiddleware"])(...middlewares), !options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
   const store = Object(redux__WEBPACK_IMPORTED_MODULE_8__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_6__["default"], initialState, enhancer); //withReduxSaga할 때 필요
 
@@ -3317,7 +3320,7 @@ function* watchLoadMainPosts() {
 }
 
 function loadHashtagPostsAPI(tag) {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/hashtag/${tag}`);
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/hashtag/${encodeURIComponent(tag)}`);
 }
 
 function* loadHashtagPosts(action) {
@@ -3340,7 +3343,7 @@ function* watchLoadHashtagPosts() {
 }
 
 function loadUserPostsAPI(id) {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${id}/posts`);
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${id || 0}/posts`);
 }
 
 function* loadUserPosts(action) {
@@ -3730,7 +3733,7 @@ function* watchUnfollow() {
 
 function loadFollowersAPI(userId) {
   // 서버에 요청을 보내는 부분
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId}/followers`, {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId || 0}/followers`, {
     withCredentials: true
   });
 }
@@ -3760,7 +3763,7 @@ function* watchLoadFollowers() {
 
 function loadFollowingsAPI(userId) {
   // 서버에 요청을 보내는 부분
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId}/followings`, {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/user/${userId || 0}/followings`, {
     withCredentials: true
   });
 }
@@ -3790,7 +3793,7 @@ function* watchLoadFollowings() {
 
 function removeFollowerAPI(userId) {
   // 서버에 요청을 보내는 부분
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/user/${userId}/follower`, {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/user/${userId || 0}/follower`, {
     withCredentials: true
   });
 }

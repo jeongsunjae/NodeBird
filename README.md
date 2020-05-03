@@ -474,3 +474,7 @@ Home.getInitialProps = async(context) => {
   });
 };
 ```
+
+# encodeURIComponent / decodeURIComponent
+
+- 한글들어가면 꼭 사용
