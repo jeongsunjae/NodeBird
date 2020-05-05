@@ -26,6 +26,7 @@ const Signup = () => {
 
   useEffect(()=> {
     if(me) {
+      alert('로그인했으니 메인페이지로 이동합니다.');
       Router.push('/');
     }
     
@@ -58,6 +59,11 @@ const Signup = () => {
     setTermError(false);
     setTerm(e.target.checked);
   }, []);
+
+  if(me)
+  {
+    return null;
+  }
 
   return (
     <>

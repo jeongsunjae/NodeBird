@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Avatar, Button, Card, Comment, Form, Icon, Input, List } from 'antd';
+import { Avatar, Button, Card, Comment, Form, Input, List, Popover  } from 'antd';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST, RETWEET_REQUEST } from '../reducers/post';
+import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST, RETWEET_REQUEST, REMOVE_POST_REQUEST } from '../reducers/post';
 import {TwitterOutlined,LikeOutlined,MailOutlined,EllipsisOutlined } from '@ant-design/icons';
 import PostImages from './PostImages';
 import PostCardContent from './PostCardContent';
@@ -99,6 +99,13 @@ const PostCard = ({ post }) => {
     });
   },[]);
 
+  const onRemovePost = useCallback(postId => ()=> {
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: postId,
+    });
+  })
+
   return (
     <div>
     <Card
@@ -108,7 +115,23 @@ const PostCard = ({ post }) => {
         <TwitterOutlined onClick={onRetweet}/>,
         <LikeOutlined theme={(liked ? "twoTone" : "outlined")} twoToneColor="#eb2f96" onClick={onToggleLike}/>,
         <MailOutlined onClick={onToggleComment}/>,
-        <EllipsisOutlined />,
+        <Popover
+        key="ellipsis"
+        content={(
+          <Button.Group>
+            {me && post.UserId === me.id
+              ? (
+                <>
+                  <Button>수정</Button>
+                  <Button type="danger" onClick={onRemovePost(post.id)}>삭제</Button>
+                </>
+              )
+              : <Button>신고</Button>}
+          </Button.Group>
+        )}
+      >
+        <EllipsisOutlined />
+      </Popover>,
       ]}
       title={post.RetweetId ? `${post.User.nickname}님이 리트윗하셨습니다.` : null}
       extra={!me || post.User.id === me.id
