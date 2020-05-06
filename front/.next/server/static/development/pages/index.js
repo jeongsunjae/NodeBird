@@ -2408,8 +2408,26 @@ const Home = () => {
     me
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.user);
   const {
-    mainPosts
+    mainPosts,
+    hasMorePost
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.post);
+  const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
+  const onScroll = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+      if (hasMorePost) {
+        dispatch({
+          type: _reducers_post__WEBPACK_IMPORTED_MODULE_4__["LOAD_MAIN_POSTS_REQUEST"],
+          lastId: mainPosts[mainPosts.length - 1].id
+        });
+      }
+    }
+  }, [hasMorePost, mainPosts.length]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [mainPosts.length]);
   return __jsx("div", null, me && __jsx(_components_PostForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), mainPosts.map(c => {
     return __jsx(_components_PostCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: c,
@@ -2491,7 +2509,8 @@ const initialState = {
   // 포스트 업로드 성공
   isAddingComment: false,
   addCommentErrorReason: '',
-  commentAdded: false
+  commentAdded: false,
+  hasMorePost: false
 };
 const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
@@ -2632,7 +2651,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
     case LOAD_USER_POSTS_REQUEST:
       {
         return _objectSpread({}, state, {
-          mainPosts: []
+          mainPosts: action.lastId === 0 ? [] : state.mainPosts,
+          hasMorePost: action.lastId ? state.hasMorePost : true
         });
       }
 
@@ -2641,7 +2661,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
     case LOAD_USER_POSTS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          mainPosts: action.data
+          mainPosts: state.mainPosts.concat(action.data),
+          hasMorePost: action.data.length === 10
         });
       }
 
@@ -2816,8 +2837,10 @@ const initialState = {
   // 남의 정보
   isEditingNickname: false,
   // 이름 변경 중
-  editNicknameErrorReason: '' // 이름 변경 실패 사유
-
+  editNicknameErrorReason: '',
+  // 이름 변경 실패 사유
+  hasMoreFollower: false,
+  hasMoreFollowing: false
 };
 const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
@@ -3008,13 +3031,16 @@ const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
     case LOAD_FOLLOWERS_REQUEST:
       {
-        return _objectSpread({}, state);
+        return _objectSpread({}, state, {
+          hasMoreFollower: action.offset ? state.hasMoreFollower : true
+        });
       }
 
     case LOAD_FOLLOWERS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          followerList: state.followerList.concat(action.data)
+          followerList: state.followerList.concat(action.data),
+          hasMoreFollower: action.data.length === 3
         });
       }
 
@@ -3025,13 +3051,16 @@ const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
     case LOAD_FOLLOWINGS_REQUEST:
       {
-        return _objectSpread({}, state);
+        return _objectSpread({}, state, {
+          hasMoreFollowing: action.offset ? state.hasMoreFollowing : true
+        });
       }
 
     case LOAD_FOLLOWINGS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          followingList: state.followingList.concat(action.data)
+          followingList: state.followingList.concat(action.data),
+          hasMoreFollowing: action.data.length === 3
         });
       }
 

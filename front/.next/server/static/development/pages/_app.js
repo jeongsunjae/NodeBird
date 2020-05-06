@@ -2500,7 +2500,8 @@ const initialState = {
   // 포스트 업로드 성공
   isAddingComment: false,
   addCommentErrorReason: '',
-  commentAdded: false
+  commentAdded: false,
+  hasMorePost: false
 };
 const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
@@ -2641,7 +2642,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
     case LOAD_USER_POSTS_REQUEST:
       {
         return _objectSpread({}, state, {
-          mainPosts: []
+          mainPosts: action.lastId === 0 ? [] : state.mainPosts,
+          hasMorePost: action.lastId ? state.hasMorePost : true
         });
       }
 
@@ -2650,7 +2652,8 @@ const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
     case LOAD_USER_POSTS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          mainPosts: action.data
+          mainPosts: state.mainPosts.concat(action.data),
+          hasMorePost: action.data.length === 10
         });
       }
 
@@ -2825,8 +2828,10 @@ const initialState = {
   // 남의 정보
   isEditingNickname: false,
   // 이름 변경 중
-  editNicknameErrorReason: '' // 이름 변경 실패 사유
-
+  editNicknameErrorReason: '',
+  // 이름 변경 실패 사유
+  hasMoreFollower: false,
+  hasMoreFollowing: false
 };
 const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
@@ -3017,13 +3022,16 @@ const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
     case LOAD_FOLLOWERS_REQUEST:
       {
-        return _objectSpread({}, state);
+        return _objectSpread({}, state, {
+          hasMoreFollower: action.offset ? state.hasMoreFollower : true
+        });
       }
 
     case LOAD_FOLLOWERS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          followerList: state.followerList.concat(action.data)
+          followerList: state.followerList.concat(action.data),
+          hasMoreFollower: action.data.length === 3
         });
       }
 
@@ -3034,13 +3042,16 @@ const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
     case LOAD_FOLLOWINGS_REQUEST:
       {
-        return _objectSpread({}, state);
+        return _objectSpread({}, state, {
+          hasMoreFollowing: action.offset ? state.hasMoreFollowing : true
+        });
       }
 
     case LOAD_FOLLOWINGS_SUCCESS:
       {
         return _objectSpread({}, state, {
-          followingList: state.followingList.concat(action.data)
+          followingList: state.followingList.concat(action.data),
+          hasMoreFollowing: action.data.length === 3
         });
       }
 
@@ -3182,13 +3193,13 @@ function* watchAddPost() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["ADD_POST_REQUEST"], addPost);
 }
 
-function loadMainPostsAPI() {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/posts');
+function loadMainPostsAPI(lastId = 0, limit = 10) {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/posts?lastId=${lastId}&limit=${limit}`);
 }
 
-function* loadMainPosts() {
+function* loadMainPosts(action) {
   try {
-    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadMainPostsAPI);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadMainPostsAPI, action.lastId);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
       type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_MAIN_POSTS_SUCCESS"],
       data: result.data
@@ -3202,16 +3213,16 @@ function* loadMainPosts() {
 }
 
 function* watchLoadMainPosts() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_MAIN_POSTS_REQUEST"], loadMainPosts);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["throttle"])(2000, _reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_MAIN_POSTS_REQUEST"], loadMainPosts);
 }
 
-function loadHashtagPostsAPI(tag) {
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/hashtag/${encodeURIComponent(tag)}`);
+function loadHashtagPostsAPI(tag, lastId) {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/hashtag/${encodeURIComponent(tag)}?lastId=${lastId}&limit=10`);
 }
 
 function* loadHashtagPosts(action) {
   try {
-    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadHashtagPostsAPI, action.data);
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadHashtagPostsAPI, action.data, action.lastId);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
       type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_HASHTAG_POSTS_SUCCESS"],
       data: result.data

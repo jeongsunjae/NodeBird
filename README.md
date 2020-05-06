@@ -478,3 +478,7 @@ Home.getInitialProps = async(context) => {
 # encodeURIComponent / decodeURIComponent
 
 - 한글들어가면 꼭 사용
+
+# throttle
+
+- 한번 호출 되면 일정시간동안 호출안되게 해줌
