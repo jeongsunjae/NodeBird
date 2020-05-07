@@ -2441,7 +2441,7 @@ const rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 /*!**************************!*\
   !*** ./reducers/post.js ***!
   \**************************/
-/*! exports provided: initialState, LOAD_MAIN_POSTS_REQUEST, LOAD_MAIN_POSTS_SUCCESS, LOAD_MAIN_POSTS_FAILURE, LOAD_HASHTAG_POSTS_REQUEST, LOAD_HASHTAG_POSTS_SUCCESS, LOAD_HASHTAG_POSTS_FAILURE, LOAD_USER_POSTS_REQUEST, LOAD_USER_POSTS_SUCCESS, LOAD_USER_POSTS_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE, REMOVE_IMAGE, ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, LOAD_COMMENTS_REQUEST, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAILURE, RETWEET_REQUEST, RETWEET_SUCCESS, RETWEET_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE, default */
+/*! exports provided: initialState, LOAD_MAIN_POSTS_REQUEST, LOAD_MAIN_POSTS_SUCCESS, LOAD_MAIN_POSTS_FAILURE, LOAD_HASHTAG_POSTS_REQUEST, LOAD_HASHTAG_POSTS_SUCCESS, LOAD_HASHTAG_POSTS_FAILURE, LOAD_USER_POSTS_REQUEST, LOAD_USER_POSTS_SUCCESS, LOAD_USER_POSTS_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE, REMOVE_IMAGE, ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, LOAD_COMMENTS_REQUEST, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAILURE, RETWEET_REQUEST, RETWEET_SUCCESS, RETWEET_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2481,11 +2481,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_POST_REQUEST", function() { return REMOVE_POST_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_POST_SUCCESS", function() { return REMOVE_POST_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_POST_FAILURE", function() { return REMOVE_POST_FAILURE; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_POST_REQUEST", function() { return LOAD_POST_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_POST_SUCCESS", function() { return LOAD_POST_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_POST_FAILURE", function() { return LOAD_POST_FAILURE; });
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! immer */ "immer");
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(immer__WEBPACK_IMPORTED_MODULE_0__);
 
 const initialState = {
   mainPosts: [],
@@ -2501,7 +2501,8 @@ const initialState = {
   isAddingComment: false,
   addCommentErrorReason: '',
   commentAdded: false,
-  hasMorePost: false
+  hasMorePost: false,
+  singlePost: null
 };
 const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
@@ -2537,222 +2538,201 @@ const RETWEET_FAILURE = 'RETWEET_FAILURE';
 const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 /* harmony default export */ __webpack_exports__["default"] = ((state = initialState, action) => {
-  switch (action.type) {
-    case UPLOAD_IMAGES_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+  return immer__WEBPACK_IMPORTED_MODULE_0___default()(state, draft => {
+    switch (action.type) {
+      case UPLOAD_IMAGES_REQUEST:
+        {
+          break;
+        }
 
-    case UPLOAD_IMAGES_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          imagePaths: [...state.imagePaths, ...action.data]
-        });
-      }
+      case UPLOAD_IMAGES_SUCCESS:
+        {
+          action.data.forEach(p => {
+            draft.imagePaths.push(p);
+          });
+          break;
+        }
 
-    case UPLOAD_IMAGES_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case UPLOAD_IMAGES_FAILURE:
+        {
+          break;
+        }
 
-    case REMOVE_IMAGE:
-      {
-        return _objectSpread({}, state, {
-          imagePaths: state.imagePaths.filter((v, i) => i !== action.index)
-        });
-      }
+      case REMOVE_IMAGE:
+        {
+          const index = draft.imagePaths.findIndex((v, i) => i === action.index);
+          draft.imagePaths.splice(index, 1);
+          break;
+        }
 
-    case ADD_POST_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isAddingPost: true,
-          addPostErrorReason: '',
-          postAdded: false
-        });
-      }
+      case ADD_POST_REQUEST:
+        {
+          draft.isAddingPost = true;
+          draft.addCommentErrorReason = '';
+          draft.postAdded = false;
+          break;
+        }
 
-    case ADD_POST_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          isAddingPost: false,
-          mainPosts: [action.data, ...state.mainPosts],
-          postAdded: true,
-          imagePaths: []
-        });
-      }
+      case ADD_POST_SUCCESS:
+        {
+          draft.isAddingPost = false;
+          draft.mainPosts.unshift(action.data);
+          draft.postAdded = true;
+          draft.imagePaths = [];
+          break;
+        }
 
-    case ADD_POST_FAILURE:
-      {
-        return _objectSpread({}, state, {
-          isAddingPost: false,
-          addPostErrorReason: action.error
-        });
-      }
+      case ADD_POST_FAILURE:
+        {
+          draft.isAddingPost = false;
+          draft.addPostErrorReason = action.error;
+          break;
+        }
 
-    case ADD_COMMENT_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isAddingComment: true,
-          addCommentErrorReason: '',
-          commentAdded: false
-        });
-      }
+      case ADD_COMMENT_REQUEST:
+        {
+          draft.isAddingComment = true;
+          draft.addCommentErrorReason = '';
+          draft.commentAdded = false;
+          break;
+        }
 
-    case ADD_COMMENT_SUCCESS:
-      {
-        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
-        const post = state.mainPosts[postIndex];
-        const Comments = [...post.Comments, action.data.comment];
-        const mainPosts = [...state.mainPosts];
-        mainPosts[postIndex] = _objectSpread({}, post, {
-          Comments
-        });
-        return _objectSpread({}, state, {
-          isAddingComment: false,
-          mainPosts,
-          commentAdded: true
-        });
-      }
+      case ADD_COMMENT_SUCCESS:
+        {
+          const postIndex = draft.mainPosts.findIndex(v => v.id === action.data.postId);
+          draft.mainPosts[postIndex].Comments.push(action.data.comment);
+          draft.isAddingComment = false;
+          draft.commentAdded = true;
+          break;
+        }
 
-    case ADD_COMMENT_FAILURE:
-      {
-        return _objectSpread({}, state, {
-          isAddingComment: false,
-          addCommentErrorReason: action.error
-        });
-      }
+      case ADD_COMMENT_FAILURE:
+        {
+          draft.isAddingComment = false;
+          draft.addingPostErrorReason = action.error;
+          break;
+        }
 
-    case LOAD_COMMENTS_SUCCESS:
-      {
-        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
-        const post = state.mainPosts[postIndex];
-        const Comments = action.data.comments;
-        const mainPosts = [...state.mainPosts];
-        mainPosts[postIndex] = _objectSpread({}, post, {
-          Comments
-        });
-        return _objectSpread({}, state, {
-          mainPosts
-        });
-      }
+      case LOAD_COMMENTS_SUCCESS:
+        {
+          const postIndex = draft.mainPosts.findIndex(v => v.id === action.data.postId);
+          draft.mainPosts[postIndex].Comments = action.data.comments;
+          break;
+        }
 
-    case LOAD_MAIN_POSTS_REQUEST:
-    case LOAD_HASHTAG_POSTS_REQUEST:
-    case LOAD_USER_POSTS_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          mainPosts: action.lastId === 0 ? [] : state.mainPosts,
-          hasMorePost: action.lastId ? state.hasMorePost : true
-        });
-      }
+      case LOAD_MAIN_POSTS_REQUEST:
+      case LOAD_HASHTAG_POSTS_REQUEST:
+      case LOAD_USER_POSTS_REQUEST:
+        {
+          draft.mainPosts = !action.lastId ? [] : draft.mainPosts;
+          draft.hasMorePost = action.lastId ? draft.hasMorePost : true;
+          break;
+        }
 
-    case LOAD_MAIN_POSTS_SUCCESS:
-    case LOAD_HASHTAG_POSTS_SUCCESS:
-    case LOAD_USER_POSTS_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          mainPosts: state.mainPosts.concat(action.data),
-          hasMorePost: action.data.length === 10
-        });
-      }
+      case LOAD_MAIN_POSTS_SUCCESS:
+      case LOAD_HASHTAG_POSTS_SUCCESS:
+      case LOAD_USER_POSTS_SUCCESS:
+        {
+          action.data.forEach(d => {
+            draft.mainPosts.push(d);
+          });
+          draft.hasMorePost = action.data.length === 10;
+          break;
+        }
 
-    case LOAD_MAIN_POSTS_FAILURE:
-    case LOAD_HASHTAG_POSTS_FAILURE:
-    case LOAD_USER_POSTS_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case LOAD_MAIN_POSTS_FAILURE:
+      case LOAD_HASHTAG_POSTS_FAILURE:
+      case LOAD_USER_POSTS_FAILURE:
+        {
+          break;
+        }
 
-    case LIKE_POST_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case LIKE_POST_REQUEST:
+        {
+          break;
+        }
 
-    case LIKE_POST_SUCCESS:
-      {
-        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
-        const post = state.mainPosts[postIndex];
-        const Likers = [{
-          id: action.data.userId
-        }, ...post.Likers];
-        const mainPosts = [...state.mainPosts];
-        mainPosts[postIndex] = _objectSpread({}, post, {
-          Likers
-        });
-        return _objectSpread({}, state, {
-          mainPosts
-        });
-      }
+      case LIKE_POST_SUCCESS:
+        {
+          const postIndex = draft.mainPosts.findIndex(v => v.id === action.data.postId);
+          draft.mainPosts[postIndex].Likers.unshift({
+            id: action.data.userId
+          });
+          break;
+        }
 
-    case LIKE_POST_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case LIKE_POST_FAILURE:
+        {
+          break;
+        }
 
-    case UNLIKE_POST_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case UNLIKE_POST_REQUEST:
+        {
+          break;
+        }
 
-    case UNLIKE_POST_SUCCESS:
-      {
-        const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
-        const post = state.mainPosts[postIndex];
-        const Likers = post.Likers.filter(v => v.id !== action.data.userId);
-        const mainPosts = [...state.mainPosts];
-        mainPosts[postIndex] = _objectSpread({}, post, {
-          Likers
-        });
-        return _objectSpread({}, state, {
-          mainPosts
-        });
-      }
+      case UNLIKE_POST_SUCCESS:
+        {
+          const postIndex = draft.mainPosts.findIndex(v => v.id === action.data.postId);
+          const likeIndex = draft.mainPosts[postIndex].Likers.findIndex(v => v.id === action.data.userId);
+          draft.mainPosts[postIndex].Likers.splice(likeIndex, 1);
+          break;
+        }
 
-    case UNLIKE_POST_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case UNLIKE_POST_FAILURE:
+        {
+          break;
+        }
 
-    case RETWEET_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case RETWEET_REQUEST:
+        {
+          break;
+        }
 
-    case RETWEET_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          mainPosts: [action.data, ...state.mainPosts]
-        });
-      }
+      case RETWEET_SUCCESS:
+        {
+          draft.mainPosts.unshift(action.data);
+          break;
+        }
 
-    case RETWEET_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case RETWEET_FAILURE:
+        {
+          break;
+        }
 
-    case REMOVE_POST_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case REMOVE_POST_REQUEST:
+        {
+          break;
+        }
 
-    case REMOVE_POST_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          mainPosts: state.mainPosts.filter(v => v.id !== action.data)
-        });
-      }
+      case REMOVE_POST_SUCCESS:
+        {
+          const index = draft.mainPosts.findIndex(v => v.id === action.data);
+          draft.mainPosts.splice(index, 1);
+          break;
+        }
 
-    case REMOVE_POST_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case REMOVE_POST_FAILURE:
+        {
+          break;
+        }
 
-    default:
-      {
-        return _objectSpread({}, state);
-      }
-  }
+      case LOAD_POST_SUCCESS:
+        {
+          draft.singlePost = action.data;
+          break;
+        }
+
+      default:
+        {
+          break;
+        }
+    }
+  });
 });
 
 /***/ }),
@@ -2799,11 +2779,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EDIT_NICKNAME_FAILURE", function() { return EDIT_NICKNAME_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_POST_TO_ME", function() { return ADD_POST_TO_ME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_POST_OF_ME", function() { return REMOVE_POST_OF_ME; });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! immer */ "immer");
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(immer__WEBPACK_IMPORTED_MODULE_0__);
 
 const initialState = {
   isLoggingOut: false,
@@ -2869,248 +2846,229 @@ const EDIT_NICKNAME_FAILURE = 'EDIT_NICKNAME_FAILURE';
 const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 /* harmony default export */ __webpack_exports__["default"] = ((state = initialState, action) => {
-  switch (action.type) {
-    case LOG_IN_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isLoggingIn: true,
-          logInErrorReason: ''
-        });
-      }
-
-    case LOG_IN_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          isLoggingIn: false,
-          me: action.data,
-          isLoading: false
-        });
-      }
-
-    case LOG_IN_FAILURE:
-      {
-        return _objectSpread({}, state, {
-          isLoggingIn: false,
-          logInErrorReason: action.error,
-          me: null
-        });
-      }
-
-    case LOG_OUT_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isLoggingOut: true
-        });
-      }
-
-    case LOG_OUT_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          isLoggingOut: false,
-          me: null
-        });
-      }
-
-    case SIGN_UP_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isSigningUp: true,
-          isSignedUp: false,
-          signUpErrorReason: ''
-        });
-      }
-
-    case SIGN_UP_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          isSigningUp: false,
-          isSignedUp: true
-        });
-      }
-
-    case SIGN_UP_FAILURE:
-      {
-        return _objectSpread({}, state, {
-          isSigningUp: false,
-          signUpErrorReason: action.error
-        });
-      }
-
-    case LOAD_USER_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
-
-    case LOAD_USER_SUCCESS:
-      {
-        if (action.me) {
-          return _objectSpread({}, state, {
-            me: action.data
-          });
+  return immer__WEBPACK_IMPORTED_MODULE_0___default()(state, draft => {
+    switch (action.type) {
+      case LOG_IN_REQUEST:
+        {
+          draft.isLoggingIn = true;
+          draft.logInErrorReason = '';
+          break;
         }
 
-        return _objectSpread({}, state, {
-          userInfo: action.data
-        });
-      }
+      case LOG_IN_SUCCESS:
+        {
+          draft.isLoggingIn = false;
+          draft.logInErrorReason = '';
+          draft.me = action.data;
+          break;
+        }
 
-    case LOAD_USER_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case LOG_IN_FAILURE:
+        {
+          draft.isLoggingIn = false;
+          draft.logInErrorReason = action.reason;
+          draft.me = null;
+          break;
+        }
 
-    case FOLLOW_USER_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case LOG_OUT_REQUEST:
+        {
+          draft.isLoggingOut = true;
+          break;
+        }
 
-    case FOLLOW_USER_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          me: _objectSpread({}, state.me, {
-            Followings: [{
-              id: action.data
-            }, ...state.me.Followings]
-          })
-        });
-      }
+      case LOG_OUT_SUCCESS:
+        {
+          draft.isLoggingOut = false;
+          draft.me = null;
+          break;
+        }
 
-    case FOLLOW_USER_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case SIGN_UP_REQUEST:
+        {
+          draft.isSignedUp = false;
+          draft.isSigningUp = true;
+          draft.signUpErrorReason = '';
+          break;
+        }
 
-    case UNFOLLOW_USER_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case SIGN_UP_SUCCESS:
+        {
+          draft.isSigningUp = false;
+          draft.isSignedUp = true;
+          break;
+        }
 
-    case UNFOLLOW_USER_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          me: _objectSpread({}, state.me, {
-            Followings: state.me.Followings.filter(v => v.id !== action.data)
-          }),
-          followingList: state.followingList.filter(v => v.id !== action.data)
-        });
-      }
+      case SIGN_UP_FAILURE:
+        {
+          draft.isSigningUp = false;
+          draft.signUpErrorReason = action.error;
+          break;
+        }
 
-    case UNFOLLOW_USER_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case LOAD_USER_REQUEST:
+        {
+          break;
+        }
 
-    case ADD_POST_TO_ME:
-      {
-        return _objectSpread({}, state, {
-          me: _objectSpread({}, state.me, {
-            Posts: [{
-              id: action.data
-            }, ...state.me.Posts]
-          })
-        });
-      }
+      case LOAD_USER_SUCCESS:
+        {
+          if (action.me) {
+            draft.me = action.data;
+            break;
+          }
 
-    case REMOVE_POST_OF_ME:
-      {
-        return _objectSpread({}, state, {
-          me: _objectSpread({}, state.me, {
-            Posts: state.me.Posts.filter(v => v.id !== action.data)
-          })
-        });
-      }
+          draft.useInfo = action.data;
+          break;
+        }
 
-    case LOAD_FOLLOWERS_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          hasMoreFollower: action.offset ? state.hasMoreFollower : true
-        });
-      }
+      case LOAD_USER_FAILURE:
+        {
+          break;
+        }
 
-    case LOAD_FOLLOWERS_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          followerList: state.followerList.concat(action.data),
-          hasMoreFollower: action.data.length === 3
-        });
-      }
+      case FOLLOW_USER_REQUEST:
+        {
+          break;
+        }
 
-    case LOAD_FOLLOWERS_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case FOLLOW_USER_SUCCESS:
+        {
+          draft.me.Followings.unshift({
+            id: action.data
+          });
+          break;
+        }
 
-    case LOAD_FOLLOWINGS_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          hasMoreFollowing: action.offset ? state.hasMoreFollowing : true
-        });
-      }
+      case FOLLOW_USER_FAILURE:
+        {
+          break;
+        }
 
-    case LOAD_FOLLOWINGS_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          followingList: state.followingList.concat(action.data),
-          hasMoreFollowing: action.data.length === 3
-        });
-      }
+      case UNFOLLOW_USER_REQUEST:
+        {
+          break;
+        }
 
-    case LOAD_FOLLOWINGS_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case UNFOLLOW_USER_SUCCESS:
+        {
+          const index = draft.me.Followings.findIndex(v => v.id === action.data);
+          draft.me.Followings.splice(index, 1);
+          const index2 = draft.followingList.findIndex(v => v.id === action.data);
+          draft.followingList.splice(index2, 1);
+          break;
+        }
 
-    case REMOVE_FOLLOWER_REQUEST:
-      {
-        return _objectSpread({}, state);
-      }
+      case UNFOLLOW_USER_FAILURE:
+        {
+          break;
+        }
 
-    case REMOVE_FOLLOWER_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          me: _objectSpread({}, state.me, {
-            Followers: state.me.Followers.filter(v => v.id !== action.data)
-          }),
-          followerList: state.followerList.filter(v => v.id !== action.data)
-        });
-      }
+      case ADD_POST_TO_ME:
+        {
+          draft.me.Posts.unshift({
+            id: action.data
+          });
+          break;
+        }
 
-    case REMOVE_FOLLOWER_FAILURE:
-      {
-        return _objectSpread({}, state);
-      }
+      case REMOVE_POST_OF_ME:
+        {
+          const index = draft.me.Posts.findIndex(v => v.id === action.data);
+          draft.me.Posts.splice(index, 1);
+          break;
+        }
 
-    case EDIT_NICKNAME_REQUEST:
-      {
-        return _objectSpread({}, state, {
-          isEditingNickname: true,
-          editNicknameErrorReason: ''
-        });
-      }
+      case LOAD_FOLLOWERS_REQUEST:
+        {
+          draft.followerList = !action.offset ? [] : draft.followerList;
+          draft.hasMoreFollower = action.offset ? draft.hasMoreFollower : true; // 처음 데이터를 가져올 때는 더보기 버튼을 보여주는 걸로
 
-    case EDIT_NICKNAME_SUCCESS:
-      {
-        return _objectSpread({}, state, {
-          isEditingNickname: false,
-          me: _objectSpread({}, state.me, {
-            nickname: action.data
-          })
-        });
-      }
+          break;
+        }
 
-    case EDIT_NICKNAME_FAILURE:
-      {
-        return _objectSpread({}, state, {
-          isEditingNickname: false,
-          editNicknameErrorReason: action.error
-        });
-      }
+      case LOAD_FOLLOWERS_SUCCESS:
+        {
+          action.data.forEach(d => {
+            draft.followerList.push(d);
+          });
+          draft.hasMoreFollower = action.data.length === 3;
+          break;
+        }
 
-    default:
-      {
-        return _objectSpread({}, state);
-      }
-  }
+      case LOAD_FOLLOWERS_FAILURE:
+        {
+          break;
+        }
+
+      case LOAD_FOLLOWINGS_REQUEST:
+        {
+          draft.followingList = !action.offset ? [] : draft.followingList;
+          draft.hasMoreFollowing = action.offset ? draft.hasMoreFollowing : true; // 처음 데이터를 가져올 때는 더보기 버튼을 보여주는 걸로
+
+          break;
+        }
+
+      case LOAD_FOLLOWINGS_SUCCESS:
+        {
+          action.data.forEach(d => {
+            draft.followingList.push(d);
+          });
+          draft.hasMoreFollowing = action.data.length === 3;
+          break;
+        }
+
+      case LOAD_FOLLOWINGS_FAILURE:
+        {
+          break;
+        }
+
+      case REMOVE_FOLLOWER_REQUEST:
+        {
+          break;
+        }
+
+      case REMOVE_FOLLOWER_SUCCESS:
+        {
+          const index = draft.me.Followers.findIndex(v => v.id === action.data);
+          draft.me.Followers.splice(index, 1);
+          const index2 = draft.followerList.findIndex(v => v.id === action.data);
+          draft.followerList.splice(index2, 1);
+          break;
+        }
+
+      case REMOVE_FOLLOWER_FAILURE:
+        {
+          break;
+        }
+
+      case EDIT_NICKNAME_REQUEST:
+        {
+          draft.isEditingNickname = true;
+          draft.editNicknameErrorReason = '';
+          break;
+        }
+
+      case EDIT_NICKNAME_SUCCESS:
+        {
+          draft.isEditingNickname = false;
+          draft.me.nickname = action.data;
+          break;
+        }
+
+      case EDIT_NICKNAME_FAILURE:
+        {
+          draft.isEditingNickname = false;
+          draft.editNicknameErrorReason = action.error;
+          break;
+        }
+
+      default:
+        {
+          break;
+        }
+    }
+  });
 });
 
 /***/ }),
@@ -3457,8 +3415,32 @@ function* watchRemovePost() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["REMOVE_POST_REQUEST"], RemovePost);
 }
 
+function loadPostAPI(postId) {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`/post/${postId}`);
+}
+
+function* loadPost(action) {
+  try {
+    const result = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["call"])(loadPostAPI, action.data);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_POST_SUCCESS"],
+      data: result.data
+    });
+  } catch (e) {
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_POST_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchLoadPost() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_reducers_post__WEBPACK_IMPORTED_MODULE_2__["LOAD_POST_REQUEST"], loadPost);
+}
+
 function* postSaga() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadMainPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddPost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddComment), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadComments), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadHashtagPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadUserPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUploadImages), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLikePost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUnLikePost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchRetweet), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchRemovePost)]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadMainPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddPost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchAddComment), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadComments), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadHashtagPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadUserPosts), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUploadImages), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLikePost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchUnLikePost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchRetweet), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchRemovePost), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLoadPost)]);
 }
 
 /***/ }),
@@ -3816,6 +3798,17 @@ module.exports = require("antd");
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
+
+/***/ }),
+
+/***/ "immer":
+/*!************************!*\
+  !*** external "immer" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("immer");
 
 /***/ }),
 
