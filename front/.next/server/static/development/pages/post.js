@@ -109,8 +109,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _reducers_post__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/post */ "./reducers/post.js");
+/* harmony import */ var react_helmet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-helmet */ "react-helmet");
+/* harmony import */ var react_helmet__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_helmet__WEBPACK_IMPORTED_MODULE_4__);
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -121,8 +124,27 @@ const Post = ({
   const {
     singlePost
   } = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(state => state.post);
-  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("div", null, id), __jsx("div", null, singlePost.content), __jsx("div", null, singlePost.User.nickname), __jsx("div", null, singlePost.Images[0] && __jsx("img", {
-    src: `http://localhost:3065/${post.Images[0].src}`
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(react_helmet__WEBPACK_IMPORTED_MODULE_4__["Helmet"], {
+    title: `${singlePost.User.nickname}님의 글`,
+    description: singlePost,
+    meta: [{
+      name: 'description',
+      content: singlePost.content
+    }, {
+      property: 'og:title',
+      content: `${singlePost}님의 게시글`
+    }, {
+      property: 'og:description',
+      content: singlePost.content
+    }, {
+      property: 'og:image',
+      content: singlePost.Images[0] && `http://localhost:3065/${singlePost.Images[0].src}`
+    }, {
+      property: 'og:url',
+      content: `http://localhost:3060/post/${id}`
+    }]
+  }), __jsx("div", null, id), __jsx("div", null, singlePost.content), __jsx("div", null, singlePost.User.nickname), __jsx("div", null, singlePost.Images[0] && __jsx("img", {
+    src: `http://localhost:3065/${singlePost.Images[0].src}`
   })));
 };
 
@@ -485,6 +507,17 @@ module.exports = require("prop-types");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-helmet":
+/*!*******************************!*\
+  !*** external "react-helmet" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-helmet");
 
 /***/ }),
 

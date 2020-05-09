@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import PropTypes  from 'prop-types';
 import withRedex from 'next-redux-wrapper';
@@ -11,21 +10,49 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 import axios from 'axios';
+import {Helmet} from 'react-helmet';
+import {Container} from 'next/app';
+
 
 const NodeBird = ({Component, store, pageProps}) => {
 
     return (
+      <Container>
         <Provider store={store}>
-            <Head>
-                <title>NodeBird</title>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.4/antd.css" />
-                <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-                <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-            </Head>
+          <Helmet
+          title="NodeBird"
+          htmlAttributes={{ lang: 'ko' }}
+          meta={[{
+            charset: 'UTF-8',
+          }, {
+            name: 'viewport',
+            content: 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
+          }, {
+            'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
+          }, {
+            name: 'description', content: ' NodeBird SNS',
+          }, {
+            name: 'og:title', content: 'NodeBird',
+          }, {
+            name: 'og:description', content: 'NodeBird SNS',
+          }, {
+            property: 'og:type', content: 'website',
+          }]}
+          link={[{
+            rel: 'shortcut icon', href: '/favicon.ico',
+          }, {
+            rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css',
+          }, {
+            rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css',
+          }, {
+            rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css',
+          }]}
+        />
             <AppLayout>
                 <Component {...pageProps} />
             </AppLayout>
         </Provider>
+      </Container>
     )
 };
 
@@ -39,7 +66,7 @@ NodeBird.propTypes = {
 NodeBird.getInitialProps = async (context) => {
 
     const { ctx, Component } = context;
-    console.log(ctx);
+   
     let pageProps = {};
 
     const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
