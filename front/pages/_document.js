@@ -2,11 +2,14 @@ import React from 'react';
 import Documnet, {Main, NextScript} from 'next/document';
 import {Helmet} from 'react-helmet';
 import PropTypes from 'prop-types';
+import { ServerStyleSheet} from 'styled-components';
 
 class MyDocument extends Documnet {
     static getInitialProps(context) {
-        const page = context.renderPage((App)=> (props)=> <App {...props}/>)
-        return {...page, helmet: Helmet.renderStatic()};
+        const sheet = new ServerStyleSheet();
+        const page = context.renderPage((App)=> (props)=> sheet.collectStyles(<App {...props}/>));
+        const styleTags = sheet.getStyleElement();
+        return {...page, helmet: Helmet.renderStatic(), styleTags};
     }
 
     render() {
@@ -18,6 +21,7 @@ class MyDocument extends Documnet {
         return (
             <html {...htmlAttrs}>
                 <head>
+                    {this.props.styleTags}
                     {Object.values(helmet).map(el=>el.toComponent())}
                 </head>
                 <body {...bodyAttrs}>
@@ -31,6 +35,7 @@ class MyDocument extends Documnet {
 
 MyDocument.propTypes = {
     helmet: PropTypes.object.isRequired,
+    styleTags: PropTypes.object.isRequired,
   };
 
   

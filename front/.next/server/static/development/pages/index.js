@@ -97,11 +97,13 @@ module.exports =
 /*!**********************************!*\
   !*** ./components/ImagesZoom.js ***!
   \**********************************/
-/*! exports provided: default */
+/*! exports provided: Indicator, ImgWrapper, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Indicator", function() { return Indicator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImgWrapper", function() { return ImgWrapper; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
@@ -110,11 +112,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
 
+
+const Overlay = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
+  position: 'fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+const Header = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.header`
+height: 44px;
+background: white;
+position: relative;
+padding: 0;
+text-align: center;
+
+& h1 {
+  margin: 0;
+  font-size: 17px;
+  color: #333;
+  line-height: 44px;
+}
+`;
+const SlickWrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
+  height: calc(100% - 44px);
+  background: #090909;
+`;
+const CloseBtn = styled_components__WEBPACK_IMPORTED_MODULE_4___default()(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__["CloseOutlined"])`
+  position: absolute;
+  right:0;
+  top:0;
+  padding: 15;
+  line-height: 14px;
+  cursor: pointer;
+`;
+const Indicator = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
+  text-align: center;
+
+  
+  & > div {
+    width: 75px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: #313131;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+  }
+
+`;
+const ImgWrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
+  padding: 32px;
+  text-align: center;
+  
+  & img {
+    margin: 0 auto;
+    max-height: 750px;
+  }
+`;
 
 const ImagesZoom = ({
   images,
@@ -124,47 +189,10 @@ const ImagesZoom = ({
     0: currentSlide,
     1: setCurrentSlide
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
-  return __jsx("div", {
-    style: {
-      position: 'fixed',
-      zIndex: 5000,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0
-    }
-  }, __jsx("header", {
-    style: {
-      height: 44,
-      background: 'white',
-      position: 'relative',
-      padding: 0,
-      textAlign: 'center'
-    }
-  }, __jsx("h1", {
-    style: {
-      margin: 0,
-      fontSize: '17px',
-      color: '#333',
-      lineHeight: '44px'
-    }
-  }, "\uC0C1\uC138 \uC774\uBBF8\uC9C0"), __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__["CloseOutlined"], {
+  return __jsx(Overlay, null, __jsx(Header, null, __jsx("h1", null, "\uC0C1\uC138 \uC774\uBBF8\uC9C0"), __jsx(CloseBtn, {
     type: "close",
-    onClick: onClose,
-    style: {
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      padding: 15,
-      lineHeight: '14px',
-      cursor: 'pointer'
-    }
-  })), __jsx("div", {
-    style: {
-      height: 'calc(100% - 44px)',
-      background: '#090909'
-    }
-  }, __jsx("div", null, __jsx(react_slick__WEBPACK_IMPORTED_MODULE_2___default.a, {
+    onClick: onClose
+  })), __jsx(SlickWrapper, null, __jsx("div", null, __jsx(react_slick__WEBPACK_IMPORTED_MODULE_2___default.a, {
     initialSlide: 0,
     afterChange: slide => setCurrentSlide(slide),
     infinite: false,
@@ -172,35 +200,10 @@ const ImagesZoom = ({
     slidesToShow: 1,
     slidesToScroll: 1
   }, images.map(v => {
-    return __jsx("div", {
-      style: {
-        padding: 32,
-        textAlign: 'center'
-      }
-    }, __jsx("img", {
-      src: `http://localhost:3065/${v.src}`,
-      style: {
-        margin: '0 auto',
-        maxHeight: 750
-      }
+    return __jsx(ImgWrapper, null, __jsx("img", {
+      src: `http://localhost:3065/${v.src}`
     }));
-  })), __jsx("div", {
-    style: {
-      textAlign: 'center'
-    }
-  }, __jsx("div", {
-    style: {
-      width: 75,
-      height: 30,
-      lineHeight: '30px',
-      borderRadius: 15,
-      background: '#313131',
-      display: 'inline-block',
-      textAlign: 'center',
-      color: 'white',
-      fontSize: '15px'
-    }
-  }, currentSlide + 1, " / ", images.length)))));
+  })), __jsx(Indicator, null, __jsx("div", null, currentSlide + 1, " / ", images.length)))));
 };
 
 ImagesZoom.propTypes = {
@@ -238,6 +241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostImages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PostImages */ "./components/PostImages.js");
 /* harmony import */ var _PostCardContent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PostCardContent */ "./components/PostCardContent.js");
 /* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_10__);
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -249,6 +254,10 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
+
+const CardWrapper = styled_components__WEBPACK_IMPORTED_MODULE_10___default.a.div`
+  margin-bottom: 20px;
+`;
 
 const PostCard = ({
   post
@@ -345,7 +354,7 @@ const PostCard = ({
       data: postId
     });
   });
-  return __jsx("div", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+  return __jsx(CardWrapper, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     key: +post.createdAt,
     cover: post.Images && post.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
       images: post.Images
@@ -3196,6 +3205,17 @@ module.exports = require("react-redux");
 /***/ (function(module, exports) {
 
 module.exports = require("react-slick");
+
+/***/ }),
+
+/***/ "styled-components":
+/*!************************************!*\
+  !*** external "styled-components" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("styled-components");
 
 /***/ }),
 

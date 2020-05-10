@@ -482,3 +482,16 @@ Home.getInitialProps = async(context) => {
 # throttle
 
 - 한번 호출 되면 일정시간동안 호출안되게 해줌
+
+# style-component SSR
+
+```
+  static getInitialProps(context) {
+        const sheet = new ServerStyleSheet();
+        const page = context.renderPage((App)=> (props)=> sheet.collectStyles(<App {...props}/>));
+        //props화
+        const styleTags = sheet.getStyleElement();
+        return {...page, helmet: Helmet.renderStatic(), styleTags};
+    }
+
+```
