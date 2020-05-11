@@ -84,7 +84,7 @@ NodeBird.getInitialProps = async (context) => {
     }
 
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
+      pageProps = await Component.getInitialProps(ctx) || {};
     }
 
     //컴포넌트의 프롭스

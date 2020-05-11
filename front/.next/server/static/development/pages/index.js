@@ -93,17 +93,15 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./components/ImagesZoom.js":
-/*!**********************************!*\
-  !*** ./components/ImagesZoom.js ***!
-  \**********************************/
-/*! exports provided: Indicator, ImgWrapper, default */
+/***/ "./components/ImagesZoom/index.js":
+/*!****************************************!*\
+  !*** ./components/ImagesZoom/index.js ***!
+  \****************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Indicator", function() { return Indicator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImgWrapper", function() { return ImgWrapper; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
@@ -112,74 +110,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_slick__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_slick__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style */ "./components/ImagesZoom/style.js");
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
 
 
-const Overlay = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
-  position: 'fixed;
-  z-index: 5000;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-const Header = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.header`
-height: 44px;
-background: white;
-position: relative;
-padding: 0;
-text-align: center;
-
-& h1 {
-  margin: 0;
-  font-size: 17px;
-  color: #333;
-  line-height: 44px;
-}
-`;
-const SlickWrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
-  height: calc(100% - 44px);
-  background: #090909;
-`;
-const CloseBtn = styled_components__WEBPACK_IMPORTED_MODULE_4___default()(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__["CloseOutlined"])`
-  position: absolute;
-  right:0;
-  top:0;
-  padding: 15;
-  line-height: 14px;
-  cursor: pointer;
-`;
-const Indicator = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
-  text-align: center;
-
-  
-  & > div {
-    width: 75px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 15px;
-    background: #313131;
-    display: inline-block;
-    text-align: center;
-    color: white;
-    font-size: 15px;
-  }
-
-`;
-const ImgWrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div`
-  padding: 32px;
-  text-align: center;
-  
-  & img {
-    margin: 0 auto;
-    max-height: 750px;
-  }
-`;
 
 const ImagesZoom = ({
   images,
@@ -189,10 +126,10 @@ const ImagesZoom = ({
     0: currentSlide,
     1: setCurrentSlide
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
-  return __jsx(Overlay, null, __jsx(Header, null, __jsx("h1", null, "\uC0C1\uC138 \uC774\uBBF8\uC9C0"), __jsx(CloseBtn, {
+  return __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["Overlay"], null, __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["Header"], null, __jsx("h1", null, "\uC0C1\uC138 \uC774\uBBF8\uC9C0"), __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["CloseBtn"], {
     type: "close",
     onClick: onClose
-  })), __jsx(SlickWrapper, null, __jsx("div", null, __jsx(react_slick__WEBPACK_IMPORTED_MODULE_2___default.a, {
+  })), __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["SlickWrapper"], null, __jsx("div", null, __jsx(react_slick__WEBPACK_IMPORTED_MODULE_2___default.a, {
     initialSlide: 0,
     afterChange: slide => setCurrentSlide(slide),
     infinite: false,
@@ -200,10 +137,10 @@ const ImagesZoom = ({
     slidesToShow: 1,
     slidesToScroll: 1
   }, images.map(v => {
-    return __jsx(ImgWrapper, null, __jsx("img", {
+    return __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["ImgWrapper"], null, __jsx("img", {
       src: `http://localhost:3065/${v.src}`
     }));
-  })), __jsx(Indicator, null, __jsx("div", null, currentSlide + 1, " / ", images.length)))));
+  })), __jsx(_style__WEBPACK_IMPORTED_MODULE_4__["Indicator"], null, __jsx("div", null, currentSlide + 1, " / ", images.length)))));
 };
 
 ImagesZoom.propTypes = {
@@ -216,10 +153,229 @@ ImagesZoom.propTypes = {
 
 /***/ }),
 
-/***/ "./components/PostCard.js":
-/*!********************************!*\
-  !*** ./components/PostCard.js ***!
-  \********************************/
+/***/ "./components/ImagesZoom/style.js":
+/*!****************************************!*\
+  !*** ./components/ImagesZoom/style.js ***!
+  \****************************************/
+/*! exports provided: Overlay, Header, SlickWrapper, CloseBtn, Indicator, ImgWrapper */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Overlay", function() { return Overlay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return Header; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SlickWrapper", function() { return SlickWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CloseBtn", function() { return CloseBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Indicator", function() { return Indicator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImgWrapper", function() { return ImgWrapper; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const Overlay = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div`
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+const Header = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.header`
+  height: 44px;
+  background: white;
+  position: relative;
+  padding: 0;
+  text-align: center;
+  
+  & h1 {
+    margin: 0;
+    font-size: 17px;
+    color: #333;
+    line-height: 44px;
+  }
+`;
+const SlickWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div`
+  height: calc(100% - 44px);
+  background: #090909;
+`;
+const CloseBtn = styled_components__WEBPACK_IMPORTED_MODULE_0___default()(_ant_design_icons__WEBPACK_IMPORTED_MODULE_1__["CloseOutlined"])`
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  line-height: 14px;
+  cursor: pointer;
+`;
+const Indicator = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div`
+  text-align: center;
+  
+  & > div {
+    width: 75px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: #313131;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+  }
+`;
+const ImgWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div`
+  padding: 32px;
+  text-align: center;
+  
+  & img {
+    margin: 0 auto;
+    max-height: 750px;
+  }
+`;
+
+/***/ }),
+
+/***/ "./components/PostCardContent.js":
+/*!***************************************!*\
+  !*** ./components/PostCardContent.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+const PostCardContent = ({
+  postData
+}) => {
+  return __jsx("div", null, postData.split(/(#[^\s]+)/g).map(v => {
+    if (v.match(/#[^\s]+/)) {
+      return __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        href: {
+          pathname: '/hashtag',
+          query: {
+            tag: v.slice(1)
+          }
+        },
+        as: `/hashtag/${v.slice(1)}`,
+        key: v
+      }, __jsx("a", null, v));
+    }
+
+    return v;
+  }));
+};
+
+PostCardContent.propTypes = {
+  postData: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired
+};
+/* harmony default export */ __webpack_exports__["default"] = (PostCardContent);
+
+/***/ }),
+
+/***/ "./components/PostImages.js":
+/*!**********************************!*\
+  !*** ./components/PostImages.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _ImagesZoom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ImagesZoom */ "./components/ImagesZoom/index.js");
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+
+const PostImages = ({
+  images
+}) => {
+  console.log(images);
+  const {
+    0: showImagesZoom,
+    1: setShowImagesZoom
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+  const onZoom = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    setShowImagesZoom(true);
+  }, []);
+  const onClose = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    setShowImagesZoom(false);
+  }, []);
+
+  if (images.length === 1) {
+    return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("img", {
+      src: `http://localhost:3065/${images[0].src}`,
+      onClick: onZoom
+    }), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      images: images,
+      onClose: onClose
+    }));
+  }
+
+  if (images.length === 2) {
+    return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("div", null, __jsx("img", {
+      src: `http://localhost:3065/${images[0].src}`,
+      width: "50%",
+      onClick: onZoom
+    }), __jsx("img", {
+      src: `http://localhost:3065/${images[1].src}`,
+      width: "50%",
+      onClick: onZoom
+    })), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      images: images,
+      onClose: onClose
+    }));
+  }
+
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("div", null, __jsx("img", {
+    src: `http://localhost:3065/${images[0].src}`,
+    width: "50%",
+    onClick: onZoom
+  }), __jsx("div", {
+    style: {
+      display: 'inline-block',
+      width: '50%',
+      textAlign: 'center',
+      verticalAlign: 'middle'
+    },
+    onClick: onZoom
+  }, __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__["PlusOutlined"], null), __jsx("br", null), images.length - 1, "\uAC1C\uC758 \uC0AC\uC9C4 \uB354\uBCF4\uAE30")), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    images: images,
+    onClose: onClose
+  }));
+};
+
+PostImages.propTypes = {
+  images: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    src: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  })).isRequired
+};
+/* harmony default export */ __webpack_exports__["default"] = (PostImages);
+
+/***/ }),
+
+/***/ "./container/PostCard.js":
+/*!*******************************!*\
+  !*** ./container/PostCard.js ***!
+  \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -238,8 +394,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../reducers/post */ "./reducers/post.js");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _PostImages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PostImages */ "./components/PostImages.js");
-/* harmony import */ var _PostCardContent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PostCardContent */ "./components/PostCardContent.js");
+/* harmony import */ var _components_PostImages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/PostImages */ "./components/PostImages.js");
+/* harmony import */ var _components_PostCardContent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/PostCardContent */ "./components/PostCardContent.js");
 /* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_10__);
@@ -355,8 +511,7 @@ const PostCard = ({
     });
   });
   return __jsx(CardWrapper, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-    key: +post.createdAt,
-    cover: post.Images && post.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    cover: post.Images && post.Images[0] && __jsx(_components_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
       images: post.Images
     }),
     actions: [__jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_6__["TwitterOutlined"], {
@@ -381,7 +536,7 @@ const PostCard = ({
       onClick: onFollow(post.User.id)
     }, "\uD314\uB85C\uC6B0")
   }, post.RetweetId && post.Retweet ? __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-    cover: post.Retweet.Images[0] && __jsx(_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    cover: post.Retweet.Images[0] && __jsx(_components_PostImages__WEBPACK_IMPORTED_MODULE_7__["default"], {
       images: post.Retweet.Images
     })
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
@@ -395,7 +550,7 @@ const PostCard = ({
       as: `/user/${post.User.id}`
     }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, post.Retweet.User.nickname[0]))),
     title: post.Retweet.User.nickname,
-    description: __jsx(_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    description: __jsx(_components_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
       postData: post.Retweet.content
     })
   })) : __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
@@ -409,7 +564,7 @@ const PostCard = ({
       as: `/user/${post.User.id}`
     }, __jsx("a", null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], null, post.User.nickname[0]))),
     title: post.User.nickname,
-    description: __jsx(_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    description: __jsx(_components_PostCardContent__WEBPACK_IMPORTED_MODULE_8__["default"], {
       postData: post.content
     })
   })), commentFormOpened && __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
@@ -447,65 +602,17 @@ PostCard.propTypes = {
     User: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object,
     content: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string,
     img: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string,
-    createdAt: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object
+    createdAt: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string
   })
 };
 /* harmony default export */ __webpack_exports__["default"] = (PostCard);
 
 /***/ }),
 
-/***/ "./components/PostCardContent.js":
-/*!***************************************!*\
-  !*** ./components/PostCardContent.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
-
-
-const PostCardContent = ({
-  postData
-}) => {
-  return __jsx("div", null, postData.split(/(#[^\s]+)/g).map(v => {
-    if (v.match(/#[^\s]+/)) {
-      return __jsx(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-        href: {
-          pathname: '/hashtag',
-          query: {
-            tag: v.slice(1)
-          }
-        },
-        as: `/hashtag/${v.slice(1)}`,
-        key: v
-      }, __jsx("a", null, v));
-    }
-
-    return v;
-  }));
-};
-
-PostCardContent.propTypes = {
-  postData: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (PostCardContent);
-
-/***/ }),
-
-/***/ "./components/PostForm.js":
-/*!********************************!*\
-  !*** ./components/PostForm.js ***!
-  \********************************/
+/***/ "./container/PostForm.js":
+/*!*******************************!*\
+  !*** ./container/PostForm.js ***!
+  \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -622,95 +729,6 @@ const PostForm = () => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (PostForm);
-
-/***/ }),
-
-/***/ "./components/PostImages.js":
-/*!**********************************!*\
-  !*** ./components/PostImages.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ant-design/icons */ "@ant-design/icons");
-/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ImagesZoom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ImagesZoom */ "./components/ImagesZoom.js");
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
-
-
-
-const PostImages = ({
-  images
-}) => {
-  console.log(images);
-  const {
-    0: showImagesZoom,
-    1: setShowImagesZoom
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  const onZoom = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
-    setShowImagesZoom(true);
-  }, []);
-  const onClose = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
-    setShowImagesZoom(false);
-  }, []);
-
-  if (images.length === 1) {
-    return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("img", {
-      src: `http://localhost:3065/${images[0].src}`,
-      onClick: onZoom
-    }), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      images: images,
-      onClose: onClose
-    }));
-  }
-
-  if (images.length === 2) {
-    return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("div", null, __jsx("img", {
-      src: `http://localhost:3065/${images[0].src}`,
-      width: "50%",
-      onClick: onZoom
-    }), __jsx("img", {
-      src: `http://localhost:3065/${images[1].src}`,
-      width: "50%",
-      onClick: onZoom
-    })), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      images: images,
-      onClose: onClose
-    }));
-  }
-
-  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx("div", null, __jsx("img", {
-    src: `http://localhost:3065/${images[0].src}`,
-    width: "50%",
-    onClick: onZoom
-  }), __jsx("div", {
-    style: {
-      display: 'inline-block',
-      width: '50%',
-      textAlign: 'center',
-      verticalAlign: 'middle'
-    },
-    onClick: onZoom
-  }, __jsx(_ant_design_icons__WEBPACK_IMPORTED_MODULE_2__["PlusOutlined"], null), __jsx("br", null), images.length - 1, "\uAC1C\uC758 \uC0AC\uC9C4 \uB354\uBCF4\uAE30")), showImagesZoom && __jsx(_ImagesZoom__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    images: images,
-    onClose: onClose
-  }));
-};
-
-PostImages.propTypes = {
-  images: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
-    src: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
-  })).isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (PostImages);
 
 /***/ }),
 
@@ -2400,8 +2418,8 @@ module.exports = __webpack_require__(/*! ./dist/client/link */ "./node_modules/n
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_PostForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PostForm */ "./components/PostForm.js");
-/* harmony import */ var _components_PostCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/PostCard */ "./components/PostCard.js");
+/* harmony import */ var _container_PostForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../container/PostForm */ "./container/PostForm.js");
+/* harmony import */ var _container_PostCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../container/PostCard */ "./container/PostCard.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _reducers_post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducers/post */ "./reducers/post.js");
@@ -2443,9 +2461,9 @@ const Home = () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, [mainPosts.length]);
-  return __jsx("div", null, me && __jsx(_components_PostForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), mainPosts.map(c => {
-    return __jsx(_components_PostCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      key: c,
+  return __jsx("div", null, me && __jsx(_container_PostForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), mainPosts.map(c => {
+    return __jsx(_container_PostCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: c.id,
       post: c
     });
   }));
