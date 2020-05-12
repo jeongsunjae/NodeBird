@@ -9,6 +9,9 @@ import PostImages from '../components/PostImages';
 import PostCardContent from '../components/PostCardContent';
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../reducers/user';
 import styled from 'styled-components';
+import moment from 'moment';
+
+moment.locale('ko');
 
 const CardWrapper = styled.div`
   margin-bottom: 20px;
@@ -160,6 +163,7 @@ const PostCard = ({ post }) => {
           title={post.Retweet.User.nickname}
           description={<PostCardContent postData={post.Retweet.content} />}
         />
+        {moment(post.createAt).format('YYYY.mm.dd')}
       </Card>
       )
       :
