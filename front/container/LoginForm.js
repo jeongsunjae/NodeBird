@@ -1,14 +1,19 @@
 import React, { useCallback } from 'react';
 import { Button, Form, Input } from 'antd';
+import styled from 'styled-components'
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInput } from '../pages/singup';
 import { LOG_IN_REQUEST  } from '../reducers/user'; // TODO: util 폴더로 옮기기
 
+const LoginError = styled.div`
+  color: red;
+`;
+
 const LoginForm = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const {isLoggingIn} = useSelector(state => state.user);
+  const {isLoggingIn, logInErrorReason} = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const onSubmitForm = useCallback((e) => {
@@ -33,6 +38,7 @@ const LoginForm = () => {
         <br />
         <Input name="user-password" value={password} onChange={onChangePassword} type="password" required />
       </div>
+      <LoginError>{logInErrorReason}</LoginError>
       <div style={{ marginTop: '10px' }}>
         <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
         <Link href="/singup"><a><Button>회원가입</Button></a></Link>
