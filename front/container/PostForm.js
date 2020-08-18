@@ -9,6 +9,8 @@ const PostForm = () => {
   const { imagePaths, isAddingPost, postAdded } = useSelector(state => state.post);
   const imageInput = useRef();
 
+  console.log(isAddingPost);
+  
   useEffect(() => {
     if (postAdded) {
       setText('');

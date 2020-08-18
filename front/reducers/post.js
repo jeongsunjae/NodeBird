@@ -190,6 +190,7 @@ export default (state = initialState, action) => {
         break;
       }
       case REMOVE_POST_SUCCESS: {
+        console.log(action.data);
         const index = draft.mainPosts.findIndex(v => v.id === action.data);
         draft.mainPosts.splice(index, 1);
         break;

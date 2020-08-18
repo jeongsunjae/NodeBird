@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[19],{xp7T:function(n,w,p){(window.__NEXT_P=window.__NEXT_P||[]).push(["/singup",function(){return p("l50k")}])}},[["xp7T",1,2,0,4,3,5,10]]]);

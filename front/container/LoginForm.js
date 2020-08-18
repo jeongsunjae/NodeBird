@@ -16,6 +16,7 @@ const LoginForm = () => {
   const {isLoggingIn, logInErrorReason} = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  console.log(isLoggingIn);
   const onSubmitForm = useCallback((e) => {
     dispatch({
       type: LOG_IN_REQUEST,

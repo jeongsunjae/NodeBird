@@ -4,13 +4,12 @@
 @import './panel';
 
 @picker-prefix-cls: ~'@{ant-prefix}-picker';
-@picker-text-height: 40px;
 
 .picker-padding(@input-height, @font-size, @padding-horizontal) {
   // font height probably 22.0001， So use floor better
   @font-height: floor(@font-size * @line-height-base) + 2;
-  @padding-top: (@input-height - @font-height) / 2;
-  @padding-bottom: @input-height - @font-height - @padding-top;
+  @padding-top: max((@input-height - @font-height) / 2, 0);
+  @padding-bottom: max(@input-height - @font-height - @padding-top, 0);
   padding: @padding-top @padding-horizontal @padding-bottom;
 }
 
@@ -46,6 +45,10 @@
     background: @input-disabled-bg;
     border-color: @select-border-color;
     cursor: not-allowed;
+  }
+
+  &&-disabled &-suffix {
+    color: @disabled-color;
   }
 
   &&-borderless {
@@ -126,15 +129,24 @@
   }
 
   &-separator {
+    position: relative;
     display: inline-block;
-    align-self: center;
-    width: 2em;
+    width: 1em;
     height: @font-size-lg;
     color: @disabled-color;
     font-size: @font-size-lg;
-    line-height: @font-size-lg;
-    text-align: center;
+    vertical-align: top;
     cursor: default;
+
+    .@{picker-prefix-cls}-focused & {
+      color: @text-color-secondary;
+    }
+
+    .@{picker-prefix-cls}-range-separator & {
+      .@{picker-prefix-cls}-disabled & {
+        cursor: not-allowed;
+      }
+    }
   }
 
   // ======================== Range =========================
@@ -168,6 +180,12 @@
       .@{picker-prefix-cls}-active-bar {
         opacity: 1;
       }
+    }
+
+    &-separator {
+      align-items: center;
+      padding: 0 @padding-xs;
+      line-height: 1;
     }
   }
 
@@ -224,7 +242,11 @@
       display: inline-block;
     }
 
-    .@{picker-prefix-cls}-preset span {
+    // https://github.com/ant-design/ant-design/issues/23687
+    .@{picker-prefix-cls}-preset > .@{ant-prefix}-tag-blue {
+      color: @primary-color;
+      background: @primary-1;
+      border-color: @primary-3;
       cursor: pointer;
     }
 
@@ -271,6 +293,7 @@
     .@{picker-prefix-cls}-panels {
       display: inline-flex;
       flex-wrap: nowrap;
+      direction: ltr;
     }
 
     .@{picker-prefix-cls}-panel {
